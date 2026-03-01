@@ -9,7 +9,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
   if (username === "admin" && password === "1745#") {
     // Store authentication data
     localStorage.setItem("isAuthenticated", "true");
-    localStorage.setItem("userType", "admin");
+    localStorage.setItem("userType", "admin-hams");
     localStorage.setItem("username", username);
 
     // Redirect to admin page
@@ -18,7 +18,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
   else if (username === "rakesh" && password === "rakesh007#") {
     // Store authentication data
     localStorage.setItem("isAuthenticated", "true");
-    localStorage.setItem("userType", "client");
+    localStorage.setItem("userType", "client-hams");
     localStorage.setItem("username", username);
 
     // Redirect to client page
@@ -27,7 +27,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
   else if (username === "admin" && password === "1745") {
     // Store authentication data
     localStorage.setItem("isAuthenticated", "true");
-    localStorage.setItem("userType", "admin");
+    localStorage.setItem("userType", "admin-epic");
     localStorage.setItem("username", username);
 
     // Redirect to admin page
@@ -36,7 +36,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
   else if (username === "imam" && password === "imam007#") {
     // Store authentication data
     localStorage.setItem("isAuthenticated", "true");
-    localStorage.setItem("userType", "client");
+    localStorage.setItem("userType", "client-epic");
     localStorage.setItem("username", username);
 
     // Redirect to client page
@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.key === 'Enter') {
       e.preventDefault();
       loginButton.focus();
-      // Also trigger login on Enter from password field
       setTimeout(() => {
         document.getElementById("login-form").dispatchEvent(new Event('submit'));
       }, 100);

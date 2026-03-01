@@ -3,7 +3,7 @@
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   const userType = localStorage.getItem("userType");
 
-  if (!isAuthenticated || (userType !== "admin" && userType !== "client")) {
+  if (!isAuthenticated || (userType !== "admin-hams" && userType !== "client-hams")) {
     window.location.href = "../../registration.html";
     return;
   }
