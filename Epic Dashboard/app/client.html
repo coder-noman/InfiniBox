@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Chart js  -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.css" />
+    <title>Client Site</title>
+  </head>
+
+  <body>
+    <!-- Side Bar -->
+    <section id="sidebar">
+      <div class="brand">
+        <img class="brand-img" src="./images/link3.jpg" alt="" />
+        <div class="brand2">
+          <a href="#"><span class="logo">Infini</span>BOX</a>
+          <h5>
+            <span class="logo-text">Developed by <br /></span>Link3 Technologies
+            LTD
+          </h5>
+        </div>
+      </div>
+      <div class="side-menu">
+        <div class="last-update">
+          <p href="#" class="last-update-btn">Synced:</p>
+          <p class="last-update-time" id="lastUpdateTime"></p>
+          <p class="last-update-time" id="lastUpdateDate"></p>
+        </div>
+      </div>
+      <!-- Alert Unit -->
+      <div class="alert">
+        <a href="#" class="alert-btn-upgrade">Alert Box</a>
+        <div class="wrapper">
+          <ul id="alert-list" class="alert-list"></ul>
+        </div>
+      </div>
+
+      <!-- Device Information -->
+      <!-- <div class="device">
+        <a href="#" class="device-btn-upgrade">Device Information</a>
+        <div class="device-wrapper">
+          <div class="device-wrapper-card">
+            <h5 class="device-label">LAN IP</h5>
+            <h5 class="device-value" id="device-lan">: 192.168.0.128</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">GSM Operator</h5>
+            <h5 class="device-value" id="gsm-operator">: GP</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">GSM Signal</h5>
+            <h5 class="device-value" id="gsm-signal">: 50</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">Internal Battery</h5>
+            <h5 class="device-value" id="internal-battery">: 4.1</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">PSU Status 1</h5>
+            <h5 class="device-value" id="device-psu1">: OK</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">PSU Status 2</h5>
+            <h5 class="device-value" id="device-psu2">: Ok</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">Data Path</h5>
+            <h5 class="device-value" id="data-source">: Not Found</h5>
+          </div>
+
+          <ul id="alert-list" class="alert-list"></ul>
+        </div>
+      </div> -->
+      <div class="device">
+        <a href="#" class="device-btn-upgrade">Customer Service</a>
+        <div class="device-wrapper">
+          <div class="device-wrapper-card">
+            <h5 class="device-label">Contact</h5>
+            <h5 class="device-value">: 01787686086</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">Billing Status</h5>
+            <h5 class="device-value">: Pending</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">License Status</h5>
+            <h5 class="device-value">: Active</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">License Validity</h5>
+            <h5 class="device-value" >: 30/9/2025</h5>
+          </div>
+
+          <div class="device-wrapper-card">
+            <h5 class="device-label">Link3 Products</h5>
+            <h5 class="device-value"><a href="https://link3.net/">: Buy More..</a></h5>
+          </div>
+
+          <ul id="alert-list" class="alert-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nav -->
+    <section id="content">
+      <nav>
+        <div class="breadcumb">
+          <h1 class="title">Dashboard: Epic Group</h1>
+        </div>
+        <div class="profile-box">
+          <h3 class="profile-user"><span>User:</span> Epic Group</h3>
+          <span class="divider"></span>
+          <div class="profile">
+            <img src="images/epicl.png" alt="" />
+          </div>
+          <span class="divider"></span>
+          <p class="logOut-btn" id="log-out">Log Out</p>
+        </div>
+      </nav>
+
+      <!-- Main -->
+      <main>
+          <!-- Gauge card start -->
+        <div class="gauges-container">
+          <div class="gauge-card">
+            <h3 class="gauge-title">
+              <i class="fas fa-bolt"></i> Input Voltage
+            </h3>
+            <div class="gauge">
+              <div class="gauge-bg">
+                <div class="gauge-fill" id="input-voltage-fill"></div>
+              </div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="input-voltage-value">
+                  0<span class="gauge-unit">V</span>
+                </div>
+                <div class="gauge-minmax">
+                  <span>0V</span>
+                  <span>300V</span>
+                </div>
+              </div>
+            </div>
+            <div class="status status-normal" id="input-voltage-status">
+              Normal
+            </div>
+          </div>
+
+          <div class="gauge-card">
+            <h3 class="gauge-title"><i class="fas fa-plug"></i> UPS1 Voltage</h3>
+            <div class="gauge">
+              <div class="gauge-bg">
+                <div class="gauge-fill" id="ups1-voltage-fill"></div>
+              </div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="ups1-voltage-value">
+                  0<span class="gauge-unit">V</span>
+                </div>
+                <div class="gauge-minmax">
+                  <span>0V</span>
+                  <span>300V</span>
+                </div>
+              </div>
+            </div>
+            <div class="status status-normal" id="ups1-voltage-status">
+              Normal
+            </div>
+          </div>
+
+          <div class="gauge-card">
+            <h3 class="gauge-title"><i class="fas fa-plug"></i> UPS2 Voltage</h3>
+            <div class="gauge">
+              <div class="gauge-bg">
+                <div class="gauge-fill" id="ups2-voltage-fill"></div>
+              </div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="ups2-voltage-value">
+                  0<span class="gauge-unit">V</span>
+                </div>
+                <div class="gauge-minmax">
+                  <span>0V</span>
+                  <span>300V</span>
+                </div>
+              </div>
+            </div>
+            <div class="status status-normal" id="ups2-voltage-status">
+              Normal
+            </div>
+          </div>
+
+          <div class="gauge-card">
+            <h3 class="gauge-title">
+              <i class="fas fa-battery-full"></i> Battery Voltage 1
+            </h3>
+            <div class="gauge">
+              <div class="gauge-bg">
+                <div class="gauge-fill" id="battery-voltage1-fill"></div>
+              </div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="battery-voltage1-value">
+                  0<span class="gauge-unit">V</span>
+                </div>
+                <div class="gauge-minmax">
+                  <span>0V</span>
+                  <span>220V</span>
+                </div>
+              </div>
+            </div>
+            <div class="status status-normal" id="battery-voltage1-status">
+              Normal
+            </div>
+          </div>
+
+          <div class="gauge-card">
+            <h3 class="gauge-title"><i class="fas fa-battery-full"></i> Battery Voltage 2</h3>
+            <div class="gauge">
+              <div class="gauge-bg">
+                <div class="gauge-fill" id="battery-voltage2-fill"></div>
+              </div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="battery-voltage2-value">
+                  0<span class="gauge-unit">V</span>
+                </div>
+                <div class="gauge-minmax">
+                  <span>0V</span>
+                  <span>220V</span>
+                </div>
+              </div>
+            </div>
+            <div class="status status-normal" id="battery-voltage2-status">Normal</div>
+          </div>
+
+          <div class="gauge-card">
+            <h3 class="gauge-title">
+              <i class="fas fa-temperature-high"></i> Temperature
+            </h3>
+            <div class="gauge">
+              <div class="gauge-bg">
+                <div class="gauge-fill" id="temperature-fill"></div>
+              </div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="temperature-value">
+                  0<span class="gauge-unit">°C</span>
+                </div>
+                <div class="gauge-minmax">
+                  <span>0°C</span>
+                  <span>55°C</span>
+                </div>
+              </div>
+            </div>
+            <div class="status status-normal" id="temperature-status">
+              Normal
+            </div>
+          </div>
+
+          <div class="gauge-card">
+            <h3 class="gauge-title"><i class="fas fa-tint"></i> Humidity</h3>
+            <div class="gauge">
+              <div class="gauge-bg">
+                <div class="gauge-fill" id="humidity-fill"></div>
+              </div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="humidity-value">
+                  0<span class="gauge-unit">%</span>
+                </div>
+                <div class="gauge-minmax">
+                  <span>0%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+            </div>
+            <div class="status status-normal" id="humidity-status">Normal</div>
+          </div>
+        </div>
+        <!-- Gauge card end -->
+
+        <!-- Chart start -->
+        <div class="dashboard">
+          <div class="chart-card">
+            <div class="chart-title">Temperature & Humidity</div>
+            <div class="chart-container">
+              <canvas id="environment-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Others Alarm unit -->
+          <section class="other-alarm-unit">
+            <h1 class="title">Advance Alarms</h1>
+            <br />
+            <div class="pss-card-box">
+              <div class="pss-card">
+                <div class="pss-card-main">
+                  <h3>UPS 1 Status</h3>
+                  <div class="psu-display">
+                    <p id="ups1-status"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="pss-card">
+                <div class="pss-card-main">
+                  <h3>UPS 2 Status</h3>
+                  <div class="psu-display">
+                    <p id="ups2-status"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="pss-card">
+                <div class="pss-card-main">
+                  <h3>UPS1 CB Status</h3>
+                  <div class="psu-display">
+                    <p id="ups1-cb-status"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="pss-card">
+                <div class="pss-card-main">
+                  <h3>UPS2 CB Status</h3>
+                  <div class="psu-display">
+                    <p id="ups2-cb-status"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="pss-card">
+                <div class="pss-card-main">
+                  <h3>Water Leakage</h3>
+                  <div class="psu-display">
+                    <p id="water-leakage"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </section>
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 Link3 Technologies LTD. All rights reserved.</p>
+    </footer>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
+    <script src="script.js"></script>
+  </body>
+</html>

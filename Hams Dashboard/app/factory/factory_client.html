@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <link rel="stylesheet" href="../style.css" />
+  <title>Factory</title>
+</head>
+
+<body id="factory_client">
+  <section id="sidebar">
+    <div class="brand">
+      <img class="brand-img" src="../images/link3.jpg" alt="" />
+      <div class="brand2">
+        <a href="#"><span class="logo">Infini</span>BOX</a>
+        <h5>
+          <span class="logo-text">Innovated by <br /></span>Link3 Technologies
+          LTD
+        </h5>
+      </div>
+    </div>
+    <div class="side-menu">
+      <div class="last-update">
+        <p href="#" class="last-update-btn">Synced:</p>
+        <p class="last-update-time" id="lastUpdateTime"></p>
+        <p class="last-update-time" id="lastUpdateDate"></p>
+      </div>
+      <a href="../client.html" class="active">Switch To Head Quarter</a>
+    </div>
+    <div class="alert">
+      <a href="#" class="alert-btn-upgrade">Alert Box</a>
+      <div class="wrapper">
+        <ul id="alert-list" class="alert-list"></ul>
+      </div>
+    </div>
+    <div class="device">
+      <a href="#" class="device-btn-upgrade">Customer Service</a>
+      <div class="device-wrapper">
+        <div class="device-wrapper-card">
+          <h5 class="device-label">Contact</h5>
+          <h5 class="device-value">: 01787686086</h5>
+        </div>
+        <div class="device-wrapper-card">
+          <h5 class="device-label">Billing Status</h5>
+          <h5 class="device-value">: Pending</h5>
+        </div>
+        <div class="device-wrapper-card">
+          <h5 class="device-label">License Status</h5>
+          <h5 class="device-value">: Active</h5>
+        </div>
+        <div class="device-wrapper-card">
+          <h5 class="device-label">License Validity</h5>
+          <h5 class="device-value">: 30/9/2025</h5>
+        </div>
+        <div class="device-wrapper-card">
+          <h5 class="device-label">Link3 Products</h5>
+          <h5 class="device-value"><a href="https://link3.net/">: Buy More..</a></h5>
+        </div>
+        <ul id="alert-list" class="alert-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="content">
+    <nav>
+      <div class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="breadcumb">
+        <h1 class="title">Dashboard: Hams Factory</h1>
+      </div>
+      <div class="profile-box">
+        <h3 class="profile-user"><span>User:</span> Hams Garments LTD</h3>
+        <span class="divider"></span>
+        <div class="profile">
+          <img src="../images/hamslogo.jpg" alt="" />
+        </div>
+        <!-- <span class="divider"></span>
+          <p class="logOut-btn" id="log-out">Log Out</p> -->
+      </div>
+    </nav>
+
+    <main>
+      <div class="gauges-container">
+        <div class="gauge-card">
+          <h3 class="gauge-title">
+            <i class="fas fa-bolt"></i> Input Voltage
+          </h3>
+          <div class="gauge">
+            <div class="gauge-bg">
+              <div class="gauge-fill" id="input-voltage-fill"></div>
+            </div>
+            <div class="gauge-center">
+              <div class="gauge-value" id="input-voltage-value">
+                0<span class="gauge-unit">V</span>
+              </div>
+              <div class="gauge-minmax">
+                <span>0V</span>
+                <span>300V</span>
+              </div>
+            </div>
+          </div>
+          <div class="status status-normal" id="input-voltage-status">
+            Normal
+          </div>
+        </div>
+        <div class="gauge-card">
+          <h3 class="gauge-title"><i class="fas fa-plug"></i> UPS1 Output</h3>
+          <div class="gauge">
+            <div class="gauge-bg">
+              <div class="gauge-fill" id="ups1-voltage-fill"></div>
+            </div>
+            <div class="gauge-center">
+              <div class="gauge-value" id="ups1-voltage-value">
+                0<span class="gauge-unit">V</span>
+              </div>
+              <div class="gauge-minmax">
+                <span>0V</span>
+                <span>300V</span>
+              </div>
+            </div>
+          </div>
+          <div class="status status-normal" id="ups1-voltage-status">
+            Normal
+          </div>
+        </div>
+        <div class="gauge-card">
+          <h3 class="gauge-title"><i class="fas fa-plug"></i> UPS2 Output</h3>
+          <div class="gauge">
+            <div class="gauge-bg">
+              <div class="gauge-fill" id="ups2-voltage-fill"></div>
+            </div>
+            <div class="gauge-center">
+              <div class="gauge-value" id="ups2-voltage-value">
+                0<span class="gauge-unit">V</span>
+              </div>
+              <div class="gauge-minmax">
+                <span>0V</span>
+                <span>300V</span>
+              </div>
+            </div>
+          </div>
+          <div class="status status-normal" id="ups2-voltage-status">
+            Normal
+          </div>
+        </div>
+        <div class="gauge-card">
+          <h3 class="gauge-title">
+            <i class="fas fa-battery-full"></i> Battery Voltage
+          </h3>
+          <div class="gauge">
+            <div class="gauge-bg">
+              <div class="gauge-fill" id="battery-voltage-fill"></div>
+            </div>
+            <div class="gauge-center">
+              <div class="gauge-value" id="battery-voltage-value">
+                0<span class="gauge-unit">V</span>
+              </div>
+              <div class="gauge-minmax">
+                <span>0V</span>
+                <span>280V</span>
+              </div>
+            </div>
+          </div>
+          <div class="status status-normal" id="battery-voltage-status">
+            Normal
+          </div>
+        </div>
+        <div class="gauge-card">
+          <h3 class="gauge-title">
+            <i class="fas fa-temperature-high"></i> Temperature
+          </h3>
+          <div class="gauge">
+            <div class="gauge-bg">
+              <div class="gauge-fill" id="temperature-fill"></div>
+            </div>
+            <div class="gauge-center">
+              <div class="gauge-value" id="temperature-value">
+                0<span class="gauge-unit">°C</span>
+              </div>
+              <div class="gauge-minmax">
+                <span>0°C</span>
+                <span>55°C</span>
+              </div>
+            </div>
+          </div>
+          <div class="status status-normal" id="temperature-status">
+            Normal
+          </div>
+        </div>
+        <div class="gauge-card">
+          <h3 class="gauge-title"><i class="fas fa-tint"></i> Humidity</h3>
+          <div class="gauge">
+            <div class="gauge-bg">
+              <div class="gauge-fill" id="humidity-fill"></div>
+            </div>
+            <div class="gauge-center">
+              <div class="gauge-value" id="humidity-value">
+                0<span class="gauge-unit">%</span>
+              </div>
+              <div class="gauge-minmax">
+                <span>0%</span>
+                <span>100%</span>
+              </div>
+            </div>
+          </div>
+          <div class="status status-normal" id="humidity-status">Normal</div>
+        </div>
+      </div>
+      <div class="dashboard">
+        <div class="chart-card">
+          <div class="chart-title">Temperature & Humidity</div>
+          <div class="chart-container">
+            <canvas id="environment-chart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Ipdu1 and Ipdu2 Load</div>
+          <div class="chart-container">
+            <canvas id="voltage-chart"></canvas>
+          </div>
+        </div>
+      </div>
+      <section class="psu">
+        <h1 class="title">Power Supply Monitoring Units</h1>
+        <br />
+        <div class="pss-card-box">
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>1. R750 PS-1</h3>
+              <div class="psu-display">
+                <p id="r750-ps-1"></p>
+                <p id="r750-d-ps-1"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>2. NAS PS-2</h3>
+              <div class="psu-display">
+                <p id="nas-ps-2"></p>
+                <p id="nas-d-ps-2"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>3. R720 PS-2</h3>
+              <div class="psu-display">
+                <p id="r720-ps-2"></p>
+                <p id="r720-d-ps-2"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>4. R730-1 PS-1</h3>
+              <div class="psu-display">
+                <p id="r730-1-ps-1"></p>
+                <p id="r730-1-d-ps-1"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>5. R730-2 PS-2</h3>
+              <div class="psu-display">
+                <p id="r730-2-ps-2"></p>
+                <p id="r730-2-d-ps-2"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>6. R730-3 PS-2</h3>
+              <div class="psu-display">
+                <p id="r730-3-ps-2"></p>
+                <p id="r730-3-d-ps-2"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>7. SAN SW-1 PS-2</h3>
+              <div class="psu-display">
+                <p id="san-sw-1-ps-2"></p>
+                <p id="san-sw-1-d-ps-2"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>8. SAN PS-2</h3>
+              <div class="psu-display">
+                <p id="san-ps-2"></p>
+                <p id="san-d-ps-2"></p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu2">
+            <div class="pss-card-main">
+              <h3>CISCO Dist PSU</h3>
+              <div class="psu-display">
+                <p id="cisco-distribution-psu"></p>
+                <p id="cisco-distribution-d-psu"></p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu2">
+            <div class="pss-card-main">
+              <h3>HO DR PSU1</h3>
+              <div class="psu-display">
+                <p id="ho-dr-psu1"></p>
+                <p id="ho-dr-d-psu1"></p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu2">
+            <div class="pss-card-main">
+              <h3>HO DR PSU2</h3>
+              <div class="psu-display">
+                <p id="ho-dr-psu2"></p>
+                <p id="ho-dr-d-psu2"></p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu2">
+            <div class="pss-card-main">
+              <h3>HO S PSU1</h3>
+              <div class="psu-display">
+                <p id="ho-service-psu1"></p>
+                <p id="ho-service-d-psu1"></p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu2">
+            <div class="pss-card-main">
+              <h3>HO S PSU2</h3>
+              <div class="psu-display">
+                <p id="ho-service-psu2"></p>
+                <p id="ho-service-d-psu2"></p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu2">
+            <div class="pss-card-main">
+              <h3>NVR PSU</h3>
+              <div class="psu-display">
+                <p id="nvr-psu"></p>
+                <p id="nvr-d-psu"></p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu2">
+            <div class="pss-card-main">
+              <h3>R730-1 PSU1</h3>
+              <div class="psu-display">
+                <p id="r730-1-psu1"></p>
+                <p id="r730-1-d-psu1"></p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu2">
+            <div class="pss-card-main">
+              <h3>R730-1 PSU2</h3>
+              <div class="psu-display">
+                <p id="r730-1-psu2"></p>
+                <p id="r730-1-d-psu2"></p>
+              </div>
+            </div>
+          </div>
+      </section>
+      <section class="other-alarm-unit">
+        <h1 class="title">Advance Alarms</h1>
+        <br />
+        <div class="pss-card-box">
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>Water Leakage</h3>
+              <div class="psu-display">
+                <p id="water-leakage">Alarm</p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>Fire Alarm</h3>
+              <div class="psu-display">
+                <p id="fire-Alarm">No Alarm</p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>Generator</h3>
+              <div class="psu-display">
+                <p id="generator-status">Running</p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>UPS1 CB Status</h3>
+              <div class="psu-display">
+                <p id="ups1-cb-status">Tripped</p>
+              </div>
+            </div>
+          </div>
+          <div class="pss-card pdu1">
+            <div class="pss-card-main">
+              <h3>UPS2 CB Status</h3>
+              <div class="psu-display">
+                <p id="ups2-cb-status">Ok</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+  <footer>
+    <p>&copy; 2025 Link3 Technologies LTD. All rights reserved.</p>
+  </footer>
+  <script src="factory.js"></script>
+</body>
+
+</html>
