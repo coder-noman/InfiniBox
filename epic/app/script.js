@@ -1,26 +1,37 @@
-//Handle Logout Button Start
-const role = sessionStorage.getItem("userRole");
-const path = window.location.pathname;
+// Authentication start
+(function () {
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const userType = localStorage.getItem("userType");
 
-// Protect index.html for admin only
-if (path.endsWith("/app/index.html") && role !== "admin") {
-  window.location.href = "../registration.html";
-}
+  if (!isAuthenticated || (userType !== "admin" && userType !== "client")) {
+    window.location.href = "../../registration.html";
+    return;
+  }
 
-// Protect client.html for imam only
-if (path.endsWith("/app/client.html") && role !== "imam") {
-  window.location.href = "../registration.html";
-}
+  const logoutBtn = document.getElementById("log-out");
 
-const logoutBtn = document.getElementById("log-out");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", function () {
-    sessionStorage.removeItem("userRole");
-    window.location.href = "../registration.html";
-  });
-}
+  if (logoutBtn) {
+    logoutBtn.setAttribute('tabindex', '0');
+    logoutBtn.setAttribute('role', 'button');
 
-//Handle Logout Button End
+    function logoutAction(e) {
+      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+
+        localStorage.removeItem("isAuthenticated");
+        localStorage.removeItem("userType");
+        localStorage.removeItem("username");
+
+        window.location.href = "../../registration.html";
+      }
+    }
+
+    logoutBtn.addEventListener('click', logoutAction);
+    logoutBtn.addEventListener('keydown', logoutAction);
+  }
+
+})();
+// Authentication End
 
 //Declare psu array and variable
 let alarm_arr = [0, 0, 0, 0, 0];

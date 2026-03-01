@@ -4,7 +4,7 @@
   const userType = localStorage.getItem("userType");
 
   if (!isAuthenticated || (userType !== "admin" && userType !== "client")) {
-    window.location.href = "../registration.html";
+    window.location.href = "../../registration.html";
     return;
   }
 
@@ -22,7 +22,7 @@
         localStorage.removeItem("userType");
         localStorage.removeItem("username");
 
-        window.location.href = "../registration.html";
+        window.location.href = "../../registration.html";
       }
     }
 

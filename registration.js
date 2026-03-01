@@ -13,7 +13,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
     localStorage.setItem("username", username);
 
     // Redirect to admin page
-    window.location.href = "./app/index.html";
+    window.location.href = "./hams/app/index.html";
   }
   else if (username === "rakesh" && password === "rakesh007#") {
     // Store authentication data
@@ -22,7 +22,25 @@ document.getElementById("login-form").addEventListener("submit", function (event
     localStorage.setItem("username", username);
 
     // Redirect to client page
-    window.location.href = "./app/client.html";
+    window.location.href = "./hams/app/client.html";
+  }
+  else if (username === "admin" && password === "1745") {
+    // Store authentication data
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("userType", "admin");
+    localStorage.setItem("username", username);
+
+    // Redirect to admin page
+    window.location.href = "./epic/app/index.html";
+  }
+  else if (username === "imam" && password === "imam007#") {
+    // Store authentication data
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("userType", "client");
+    localStorage.setItem("username", username);
+
+    // Redirect to client page
+    window.location.href = "./epic/app/client.html";
   }
   else {
     alert("Incorrect username or password!");
