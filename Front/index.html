@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link3 Technologies Ltd.</title>
+    <link rel="icon" type="image/png" href="./images/link3.jpg">
+  <!-- Font & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <div class="iot-backdrop">
+      <div class="grid-lines"></div>
+      <div class="digital-rain"></div>
+      <div class="orbit-ring"></div>
+    </div>
+
+    <div class="bg-particles">
+      <span style="left: 5%; top: -10%; animation-duration: 22s;"></span>
+      <span style="left: 15%; top: 30%; animation-duration: 17s; width: 10px; height: 10px;"></span>
+      <span style="left: 25%; top: 70%; animation-duration: 25s;"></span>
+      <span style="left: 40%; top: 10%; animation-duration: 19s; width: 8px; height: 8px;"></span>
+      <span style="left: 55%; top: 50%; animation-duration: 30s;"></span>
+      <span style="left: 70%; top: 85%; animation-duration: 20s; width: 5px; height: 5px;"></span>
+      <span style="left: 85%; top: 20%; animation-duration: 24s;"></span>
+      <span style="left: 95%; top: 60%; animation-duration: 18s;"></span>
+    </div>
+
+    <nav class="navbar">
+      <div class="logo-area">
+        <img class="brand-img" src="./images/link3.jpg" alt="Link3 icon" />
+        <span class="company-name">Link3 Technologies Ltd</span>
+        <span class="product-badge"><i class="fas fa-cube" style="margin-right: 4px;"></i>infinibox</span>
+      </div>
+      <a href="../registration.html" rel="noopener noreferrer" style="text-decoration: none;"><button class="login-btn"><i class="fas fa-arrow-right-to-bracket"></i> Login</button></a>
+    </nav>
+
+    <div class="hero">
+      <!-- headline left (30%) -->
+      <div class="headline">
+        <div class="iot-tag"><i class="fas fa-microchip" style="margin-right: 8px;"></i> edge intelligence · infiniBox</div>
+        <h1>connect <span>infinibox</span><br>to the invisible pulse</h1>
+        <p class="sub-message">
+          <i class="fas fa-satellite-dish" style="color: #2563eb; margin-right: 8px;"></i>
+          Sensor → Server → Dashboard in realtime.
+        </p>
+        <!-- subtle extra iot phrase -->
+        <div style="margin-top: 1.2rem; font-size:0.9rem; color:#1e4a7a; opacity:0.8;">
+          <i class="fas fa-wave-square"></i> 24/7 mesh telemetry
+        </div>
+      </div>
+
+      <!-- flow visual right (70%) -->
+      <div class="flow-visual">
+        <div class="flow-title">
+          <span><i class="fas fa-temperature-high"></i> sensor</span>
+          <span><i class="fas fa-server"></i> server</span>
+          <span><i class="fas fa-chart-line"></i> visual</span>
+        </div>
+
+        <div class="flow-animation">
+          <div class="node">
+            <div class="icon-circle"><i class="fas fa-wifi"></i></div>
+            <span class="label">sensor array</span>
+          </div>
+          <div style="flex:1; position: relative;">
+            <div class="connecting-line" style="width: 100%;"></div>
+            <div class="packet packet-left"></div>
+            <div class="packet packet-right"></div>
+          </div>
+          <div class="node">
+            <div class="icon-circle"><i class="fas fa-cloud"></i></div>
+            <span class="label">infinibox core</span>
+          </div>
+          <div style="flex:1; position: relative;">
+            <div class="connecting-line" style="width: 100%;"></div>
+            <div class="packet" style="left: 15%; animation-delay: 0.5s;"></div>
+            <div class="packet" style="left: 55%; animation-delay: 1.8s;"></div>
+          </div>
+          <div class="node">
+            <div class="icon-circle"><i class="fas fa-chart-pie"></i></div>
+            <span class="label">dashboard</span>
+          </div>
+        </div>
+
+        <!-- bars with small labels for iot context -->
+        <div class="visual-graph">
+          <div class="bar bar1"></div>
+          <div class="bar bar2"></div>
+          <div class="bar bar3"></div>
+          <div class="bar bar4"></div>
+          <div class="bar bar5"></div>
+        </div>
+        <div class="graph-label">
+          <i class="fas fa-wave-square" style="margin-right: 6px;"></i> live data stream· WIFI, GPRS, LAN
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <i class="fas fa-circle-nodes"></i> <span>sensor fusion · always alive</span>
+      <i class="fas fa-arrow-trend-up" style="color: #2563eb;"></i>
+    </div>
+  </div>
+</body>
+</html>
