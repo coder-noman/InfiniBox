@@ -1,42 +1,85 @@
 // Authentication start
-(function () {
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-  const userType = localStorage.getItem("userType");
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  if (!isAuthenticated || (userType !== "admin-epic" && userType !== "client-epic")) {
-    window.location.href = "../../registration.html";
+const firebaseConfig = {
+  apiKey: "AIzaSyCVTHWPjNPIQmSuuYDMn2ubE01xN79f7Ig",
+  authDomain: "infini-box.firebaseapp.com",
+  projectId: "infini-box",
+  storageBucket: "infini-box.firebasestorage.app",
+  messagingSenderId: "868144770126",
+  appId: "1:868144770126:web:30ddd62044764de242271f"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const page = window.location.pathname;
+
+//checking auth and role
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "/registration.html";
     return;
   }
 
-  const logoutBtn = document.getElementById("log-out");
+  const role = sessionStorage.getItem("userType");
 
-  if (logoutBtn) {
-    logoutBtn.setAttribute('tabindex', '0');
-    logoutBtn.setAttribute('role', 'button');
-
-    function logoutAction(e) {
-      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-
-        localStorage.removeItem("isAuthenticated");
-        localStorage.removeItem("userType");
-        localStorage.removeItem("username");
-
-        window.location.href = "../../registration.html";
-      }
-    }
-
-    logoutBtn.addEventListener('click', logoutAction);
-    logoutBtn.addEventListener('keydown', logoutAction);
+  if (page.includes("index.html") && role !== "admin-epic") {
+    alert("EPIC Admin only");
+    window.location.href = "/registration.html";
   }
 
-})();
+  if (page.includes("client.html") && role !== "client-epic") {
+    alert("EPIC Client only");
+    window.location.href = "/registration.html";
+  }
+});
+
+// Logout start
+document.getElementById("logout")?.addEventListener("click", async () => {
+  await signOut(auth);
+  sessionStorage.clear();
+  window.location.href = "/registration.html";
+});
+// Authentication End
+
+// Authentication start
+// (function () {
+//   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+//   const userType = localStorage.getItem("userType");
+
+//   if (!isAuthenticated || (userType !== "admin-epic" && userType !== "client-epic")) {
+//     window.location.href = "../../registration.html";
+//     return;
+//   }
+
+//   const logoutBtn = document.getElementById("log-out");
+
+//   if (logoutBtn) {
+//     logoutBtn.setAttribute('tabindex', '0');
+//     logoutBtn.setAttribute('role', 'button');
+
+//     function logoutAction(e) {
+//       if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+//         e.preventDefault();
+
+//         localStorage.removeItem("isAuthenticated");
+//         localStorage.removeItem("userType");
+//         localStorage.removeItem("username");
+
+//         window.location.href = "../../registration.html";
+//       }
+//     }
+
+//     logoutBtn.addEventListener('click', logoutAction);
+//     logoutBtn.addEventListener('keydown', logoutAction);
+//   }
+
+// })();
 // Authentication End
 
 //Declare psu array and variable
 let alarm_arr = [0, 0, 0, 0, 0];
-
-// Chart array and variable Declare
 let temp = [0, 0, 0, 0, 0, 0, 0, 0];
 let hum = [0, 0, 0, 0, 0, 0, 0, 0];
 const tim = [
@@ -161,7 +204,7 @@ function alarmData(x, input_voltage) {
     ["Detected", "No Alarm"],
   ];
 
-  for (i = 0; i <= 4; i++) {
+  for (let i = 0; i <= 4; i++) {
     if (x[i] == 1) {
       document.getElementById(alarmId[i]).innerText = alarmData[i][1];
       document.getElementById(alarmId[i]).classList.add("on-btn"); //green
