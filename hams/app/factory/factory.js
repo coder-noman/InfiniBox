@@ -1,18 +1,40 @@
 // Authentication start
-(function () {
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-  const userType = localStorage.getItem("userType");
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  if (!isAuthenticated || (userType !== "admin" && userType !== "client")) {
-    // Redirect based on current page
-    if (window.location.pathname.includes('factory_client.html')) {
-      window.location.href = "../client.html";
-    } else {
-      window.location.href = "../index.html";
-    }
+const firebaseConfig = {
+  apiKey: "AIzaSyCVTHWPjNPIQmSuuYDMn2ubE01xN79f7Ig",
+  authDomain: "infini-box.firebaseapp.com",
+  projectId: "infini-box",
+  storageBucket: "infini-box.firebasestorage.app",
+  messagingSenderId: "868144770126",
+  appId: "1:868144770126:web:30ddd62044764de242271f"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const page = window.location.pathname;
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "/registration.html";
     return;
   }
-})();
+
+  const role = sessionStorage.getItem("userType");
+
+  if (page.includes("factory.html") && role !== "admin-hams") {
+    alert("Admin only");
+    window.location.href = "/registration.html";
+  }
+
+  if (page.includes("factory_client.html") && role !== "client-hams") {
+    alert("Client only");
+    window.location.href = "/registration.html";
+  }
+});
+
+// Authentication end
 
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.getElementById('sidebar');
@@ -192,7 +214,7 @@ function psuDataShow() {
     "R730-1 PSU1",
     "R730-1 PSU2",
   ];
-  for (i = 0, j = 0; i <= 7; i++, j++) {
+  for (let i = 0, j = 0; i <= 7; i++, j++) {
     if (ipdu1_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu1_arr[i]);
     } else {
@@ -200,7 +222,7 @@ function psuDataShow() {
     }
   }
 
-  for (i = 0, j = 8; i <= 7; i++, j++) {
+  for (let i = 0, j = 8; i <= 7; i++, j++) {
     if (ipdu2_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu2_arr[i]);
     } else {
@@ -242,7 +264,7 @@ function alarmData(x, input_voltage) {
     ["Tripped", "ok"]
   ];
 
-  for (i = 0; i <= 4; i++) {
+  for (let i = 0; i <= 4; i++) {
     if (i == 2) {
       if (x[i] == 0) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
