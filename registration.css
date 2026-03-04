@@ -181,3 +181,26 @@ form .btn input[type="submit"] {
 .logo-text {
   color: gray;
 }
+
+/* New styles for password field with eye icon */
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 40px !important;
+}
+
+.password-field i {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #999;
+  font-size: 18px;
+}
+
+.password-field i:hover {
+  color: #1a75ff;
+}
