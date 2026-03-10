@@ -132,7 +132,7 @@ socket.onmessage = function (event) {
 
   psuDataInsert(data[1], data[2]);
 
-  for (i = 7, j = 0; i <= 11; i++, j++) {
+  for (let i = 7, j = 0; i <= 11; i++, j++) {
     alarm_arr[j] = parseInt(splited_data[i]);
   }
   alarmData(alarm_arr, splited_data[1]);
@@ -141,13 +141,13 @@ socket.onmessage = function (event) {
 function psuDataInsert(x, y) {
   if (x != "") {
     var ipdu1_data = x.split(",");
-    for (i = 2, k = 0; i <= 9; i++, k++) {
+    for (let i = 2, k = 0; i <= 9; i++, k++) {
       ipdu1_arr[k] = parseInt(ipdu1_data[i]);
     }
   }
   if (y != "") {
     var ipdu2_data = y.split(",");
-    for (i = 2, k = 0; i <= 9; i++, k++) {
+    for (let i = 2, k = 0; i <= 9; i++, k++) {
       ipdu2_arr[k] = parseInt(ipdu2_data[i]);
     }
   }
