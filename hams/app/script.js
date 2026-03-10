@@ -15,6 +15,42 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const page = window.location.pathname;
 
+// Mobile sidebar toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.getElementById('sidebar');
+  
+  if (mobileMenuBtn && sidebar) {
+    mobileMenuBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('sidebar-visible');
+      
+      // Change icon based on sidebar state
+      const icon = mobileMenuBtn.querySelector('i');
+      if (sidebar.classList.contains('sidebar-visible')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile && 
+          sidebar.classList.contains('sidebar-visible') && 
+          !sidebar.contains(event.target) && 
+          !mobileMenuBtn.contains(event.target)) {
+        sidebar.classList.remove('sidebar-visible');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+  }
+});
+
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     window.location.href = "../../registration.html";
@@ -41,65 +77,6 @@ document.getElementById("logout")?.addEventListener("click", async () => {
   window.location.href = "../../registration.html";
 });
 // Authentication end
-
-// Authentication start
-// (function () {
-//   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-//   const userType = localStorage.getItem("userType");
-
-//   if (!isAuthenticated || (userType !== "admin-hams" && userType !== "client-hams")) {
-//     window.location.href = "../../registration.html";
-//     return;
-//   }
-
-//   const logoutBtn = document.getElementById("log-out");
-
-//   if (logoutBtn) {
-//     logoutBtn.setAttribute('tabindex', '0');
-//     logoutBtn.setAttribute('role', 'button');
-
-//     function logoutAction(e) {
-//       if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
-//         e.preventDefault();
-
-//         localStorage.removeItem("isAuthenticated");
-//         localStorage.removeItem("userType");
-//         localStorage.removeItem("username");
-
-//         window.location.href = "../../registration.html";
-//       }
-//     }
-
-//     logoutBtn.addEventListener('click', logoutAction);
-//     logoutBtn.addEventListener('keydown', logoutAction);
-//   }
-
-// })();
-// Authentication End
-
-// menubar start
-const menuToggle = document.getElementById('menuToggle');
-const sidebar = document.getElementById('sidebar');
-const content = document.getElementById('content');
-let overlay;
-
-menuToggle.addEventListener('click', function () {
-  sidebar.classList.toggle('active');
-
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.className = 'overlay';
-    content.appendChild(overlay);
-
-    overlay.addEventListener('click', function () {
-      sidebar.classList.remove('active');
-      overlay.classList.remove('active');
-    });
-  }
-
-  overlay.classList.toggle('active');
-});
-// menubar end
 
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -550,7 +527,7 @@ function updateGauge(elementId, value, ranges) {
   fillElement.style.color = color;
 
   const unit = valueElement.querySelector(".gauge-unit")?.textContent || "";
-  valueElement.innerHTML = `${value} <span class="gauge-unit">${unit}</span>`;
+  valueElement.innerHTML = `${Math.round(value * 10) / 10} <span class="gauge-unit">${unit}</span>`;
 
   statusElement.textContent = status.text;
   statusElement.className = `status ${status.class}`;
@@ -563,7 +540,7 @@ function updateGauge(elementId, value, ranges) {
 }
 
 function updateAllData(a, b, c, d, e, f) {
-  const inputVoltage = a;
+  const inputVoltage = parseFloat(a) || 0;
   updateGauge("input-voltage", inputVoltage, {
     green: [191, 245],
     orange: [0, 190],
@@ -577,7 +554,7 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("Input Voltage", "high");
   }
 
-  const ups1Voltage = b;
+  const ups1Voltage = parseFloat(b) || 0;
   updateGauge("ups1-voltage", ups1Voltage, {
     green: [211, 230],
     orange: [0, 210],
@@ -591,7 +568,7 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("UPS1 Voltage", "high");
   }
 
-  const ups2Voltage = c;
+  const ups2Voltage = parseFloat(c) || 0;
   updateGauge("ups2-voltage", ups2Voltage, {
     green: [211, 230],
     orange: [0, 210],
@@ -605,7 +582,7 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("UPS2 Voltage", "high");
   }
 
-  const batteryVoltage = d;
+  const batteryVoltage = parseFloat(d) || 0;
   updateGauge("battery-voltage", batteryVoltage, {
     green: [241, 280],
     orange: [221, 240],
@@ -619,7 +596,7 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("Battery Voltage", "very Low");
   }
 
-  const temperature = e;
+  const temperature = parseFloat(e) || 0;
   updateGauge("temperature", temperature, {
     green: [0, 25.9],
     orange: [26, 31.9],
@@ -633,7 +610,7 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("Temperature", "very high");
   }
 
-  const humidity = f;
+  const humidity = parseFloat(f) || 0;
   updateGauge("humidity", humidity, {
     green: [41, 80.9],
     orange: [81, 100],
@@ -687,7 +664,7 @@ function initializeCharts() {
           labels: {
             color: `${color}`,
             font: {
-              size: 14,
+              size: window.innerWidth < 768 ? 10 : 14,
             },
           },
         },
@@ -699,9 +676,9 @@ function initializeCharts() {
           },
           ticks: {
             color: `${color}`,
-            maxTicksLimit: 5,
+            maxTicksLimit: window.innerWidth < 768 ? 4 : 5,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 8 : 12,
             },
           },
         },
@@ -716,7 +693,7 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 8 : 12,
             },
           },
         },
@@ -731,7 +708,7 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 8 : 12,
             },
           },
         },
@@ -768,7 +745,6 @@ function initializeCharts() {
           anchor: "end",
           align: "top",
           offset: 0,
-          minWidth: 90,
           backgroundColor: "#0f1c2d",
           borderRadius: 6,
           padding: {
@@ -779,10 +755,10 @@ function initializeCharts() {
           },
           color: "#ffffff",
           font: {
-            size: 13,
+            size: window.innerWidth < 768 ? 10 : 13,
             weight: "700",
           },
-          formatter: function (value, ctx) {
+          formatter: function (value) {
             const percent = Math.round((value * 100) / 2500);
             return percent + "%";
           },
@@ -804,10 +780,10 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 8 : 12,
             },
             callback: function (value) {
-              return value + " VA";
+              return value;
             },
           },
         },
@@ -818,7 +794,7 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 10 : 12,
             },
           },
         },
@@ -829,6 +805,24 @@ function initializeCharts() {
 }
 
 window.addEventListener("load", initializeCharts);
+
+// Update chart fonts on resize
+window.addEventListener('resize', function() {
+  if (lineChart) {
+    lineChart.options.plugins.legend.labels.font.size = window.innerWidth < 768 ? 10 : 14;
+    lineChart.options.scales.x.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
+    lineChart.options.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
+    lineChart.options.scales.y1.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
+    lineChart.update();
+  }
+  
+  if (barChart) {
+    barChart.options.plugins.datalabels.font.size = window.innerWidth < 768 ? 10 : 13;
+    barChart.options.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
+    barChart.options.scales.x.ticks.font.size = window.innerWidth < 768 ? 10 : 12;
+    barChart.update();
+  }
+});
 
 function updateLineChart(x, y) {
   let z = new Date().toLocaleTimeString();
@@ -843,8 +837,8 @@ function updateLineChart(x, y) {
     tim[i] = tim[i + 1];
   }
 
-  temp[7] = x;
-  hum[7] = y;
+  temp[7] = parseFloat(x) || 0;
+  hum[7] = parseFloat(y) || 0;
   tim[7] = z;
 
   if (lineChart) {

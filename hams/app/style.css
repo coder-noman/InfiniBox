@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
 
 * {
-  font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Open Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -38,6 +38,30 @@ a {
   text-decoration: none;
 }
 
+/* Mobile Menu Button - Only visible on mobile */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background: transparent;
+  color: var(--light);
+  border: none;
+  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+  background: transparent;
+}
+
+/* Side Bar */
 #sidebar {
   position: fixed;
   max-width: 260px;
@@ -50,26 +74,6 @@ a {
   transition: all 0.3s ease;
   z-index: 200;
   background-color: var(--grey);
-  transform: translateX(-100%);
-}
-
-#sidebar.active {
-  transform: translateX(0);
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 199;
-  display: none;
-}
-
-.overlay.active {
-  display: block;
 }
 
 .logo {
@@ -146,6 +150,7 @@ a {
   padding: 12px 0;
   border-radius: 10px;
   margin: 4px 0;
+  flex-wrap: wrap;
 }
 
 .last-update-btn {
@@ -185,7 +190,7 @@ a {
   overflow-wrap: break-word;
   background: var(--grey2);
   box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.3);
-  height: 300px;
+  height: 270px;
   overflow-y: auto;
 }
 
@@ -299,8 +304,8 @@ a {
 
 #content {
   position: relative;
-  width: 100%;
-  left: 0;
+  width: calc(100% - 260px);
+  left: 260px;
   transition: all 0.3s ease;
 }
 
@@ -316,13 +321,6 @@ nav {
   top: 0;
   left: 0;
   z-index: 100;
-}
-
-.menu-toggle {
-  display: none;
-  cursor: pointer;
-  font-size: 24px;
-  color: var(--light);
 }
 
 .breadcumb {
@@ -363,16 +361,15 @@ nav {
 
 .profile {
   position: relative;
-}
-
-.profile {
   width: 50px;
   height: 50px;
 }
 
 .profile img {
   width: 100%;
+  height: 100%;
   border-radius: 30%;
+  object-fit: cover;
 }
 
 main {
@@ -519,7 +516,7 @@ main h1 {
 }
 
 .chart-card {
-  flex: 1;
+  flex: 8;
   min-width: 300px;
   height: 400px;
   background: rgba(15, 23, 42, 0.7);
@@ -535,7 +532,6 @@ main h1 {
   color: var(--light);
   margin-bottom: 10px;
   text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .chart-container {
@@ -557,7 +553,7 @@ main h1 {
   padding: 10px 10px;
   border-radius: 10px;
   display: inline-block;
-  background: var(--gray);
+  background: var(--grey2);
   box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.3);
 }
 
@@ -579,6 +575,8 @@ main h1 {
 .psu-display {
   margin-top: 10px;
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .psu-display p:first-child {
@@ -630,15 +628,34 @@ main h1 {
   color: #000;
 }
 
+/* Beautiful Logout Button */
 .logOut-btn {
-  background: var(--blue);
-  border: 0;
-  padding: 5px 10px;
-  border-radius: 7px;
-  color: #000;
-  font-weight: bold;
+  background: var(--red);
+  padding: 8px 16px;
+  border-radius: 30px;
   color: var(--light);
+  font-weight: 600;
   cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.logOut-btn i {
+  font-size: 16px;
+}
+
+.logOut-btn:hover {
+  background: linear-gradient(135deg, #2a4fa0, #1a3a80);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(56, 103, 214, 0.4);
+}
+
+.logOut-btn:active {
+  transform: translateY(0);
 }
 
 footer {
@@ -650,7 +667,7 @@ footer {
   font-size: 14px;
 }
 
-/* For Tv  Start*/
+/* For TV Start */
 input:focus,
 button:focus,
 .logOut-btn:focus,
@@ -659,16 +676,6 @@ button:focus,
 .device-btn-upgrade:focus {
   outline: 2px solid #3867d6;
   outline-offset: 2px;
-}
-
-.logOut-btn {
-  min-height: 44px;
-  min-width: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 20px;
-  font-size: 16px;
 }
 
 .form-inner form .field input {
@@ -683,7 +690,6 @@ button:focus,
 .stand-btn,
 .generator-on-btn {
   font-weight: bold;
-  font-size: 14px;
   text-align: center;
   min-width: 60px;
   padding: 4px 8px;
@@ -702,118 +708,287 @@ body {
   height: 100%;
 }
 
-/* For Tv  End*/
-
-/* Media screen Start  */
-
+/* ========== MOBILE ONLY STYLES - Preserves laptop/desktop design ========== */
 @media screen and (max-width: 768px) {
-  #sidebar.active + #content .overlay {
+
+  /* Mobile sidebar behavior */
+  #sidebar {
+    left: -260px;
+    box-shadow: none;
+  }
+
+  #sidebar.sidebar-visible {
+    left: 0;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .mobile-menu-btn {
     display: block;
   }
 
-  .menu-toggle {
-    display: block;
+  #content {
+    width: 100%;
+    left: 0;
   }
 
-  .breadcumb {
+  footer {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* Mobile navigation adjustments */
+  nav {
+    height: 90px;
+    padding: 0 15px;
+    grid-gap: 3px;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
-    flex: 2;
+  }
+    .mobile-menu-btn {
+      background: transparent;
+    }
+  .breadcumb {
+    width: 100%;
   }
 
   .breadcumb .title {
-    font-size: 16px;
-    text-align: center;
+    font-size: 24px;
   }
 
   .profile-box {
-    justify-content: flex-end;
-    flex: 1;
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
   }
 
-  .profile-user {
-    display: none;
+  .profile-box h3 {
+    font-size: 14px;
   }
 
-  main {
-    padding: 6px 15px 20px 15px;
+  .profile-box span {
+    font-size: 16px;
   }
 
+  .profile {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logOut-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  /* Mobile gauges - 2 columns */
   .gauges-container {
-    grid-template-columns: 1fr;
-    grid-gap: 25px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 12px;
   }
 
   .gauge-card {
-    min-width: auto;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 25px 20px;
+    min-width: unset;
+    padding: 15px 10px;
   }
 
   .gauge {
-    width: 180px;
-    height: 180px;
+    width: 120px;
+    height: 120px;
+  }
+
+  .gauge-title {
+    font-size: 0.8rem;
+    gap: 4px;
+  }
+
+  .gauge-title i {
+    font-size: 0.85rem;
   }
 
   .gauge-value {
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
 
   .gauge-unit {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
   }
 
   .gauge-minmax {
-    font-size: 0.75rem;
+    font-size: 0.55rem;
   }
 
   .status {
-    font-size: 0.8rem;
-    padding: 6px 12px;
+    font-size: 0.6rem;
+    padding: 4px 8px;
   }
 
+  /* Mobile chart - full width */
   .dashboard {
     flex-direction: column;
   }
 
   .chart-card {
-    min-width: 100%;
-    height: 350px;
+    flex: 1 1 100%;
+    height: 300px;
+    min-width: unset;
+    padding: 12px;
   }
 
   .chart-title {
     font-size: 13px;
+    margin-bottom: 8px;
   }
 
+  /* Mobile PSU cards - 2 per row */
   .pss-card-box {
     grid-template-columns: repeat(2, 1fr);
+    grid-gap: 12px;
   }
 
   .pss-card {
-    min-width: auto;
-  }
-
-  .device-wrapper {
-    max-width: 100%;
-  }
-
-  .title {
-    font-size: 18px;
-    text-align: center;
+    padding: 8px;
   }
 
   .pss-card-main h3 {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .pss-card-main p {
     font-size: 11px;
   }
+
+  .psu-display {
+    flex-direction: row;
+    gap: 5px;
+  }
+
+  .psu-display p:first-child {
+    margin-right: 0;
+  }
+
+  .on-btn,
+  .off-btn,
+  .show-btn,
+  .stand-btn,
+  .generator-on-btn {
+    font-size: 10px;
+    padding: 2px 4px;
+    min-width: 50px;
+  }
+
+  /* Mobile last update */
+  .last-update {
+    font-size: 12px;
+    padding: 10px 0;
+  }
+
+  /* Mobile device information */
+  .device-label,
+  .device-value {
+    font-size: 11px;
+  }
+
+  .alert-btn-upgrade,
+  .device-btn-upgrade {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+
+  .alert-list-card {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  main {
+    padding: 6px 15px 15px 15px;
+  }
+
+  main h1 {
+    font-size: 18px;
+  }
+}
+
+/* Very small devices */
+@media screen and (max-width: 480px) {
+  .gauges-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  }
+
+  .gauge {
+    width: 100px;
+    height: 100px;
+  }
+
+  .gauge-title {
+    font-size: 0.9rem;
+  }
+
+  .gauge-value {
+    font-size: 0.9rem;
+  }
+
+  .breadcumb {
+    justify-content: center;
+  }
+  .breadcumb .title {
+    font-size: 28px;
+  }
+
+  .profile-box h3 {
+    font-size: 12px;
+  }
+
+  .profile {
+    width: 35px;
+    height: 35px;
+  }
+
+  .logOut-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .gauges-container {
+    grid-template-columns: 1fr;
+  }
+
+  .gauge {
+    width: 130px;
+    height: 130px;
+  }
+
+  .pss-card-box {
+    grid-template-columns: 1fr;
+  }
+
+  .breadcumb .title {
+    font-size: 22px;
+  }
+
+  nav {
+    height: 70px;
+  }
+
+  .profile-box {
+    flex-wrap: wrap;
+  }
+
+  .logOut-btn span {
+    display: none;
+  }
+  
+  .logOut-btn i {
+    font-size: 1.2rem;
+  }
 }
 
 @media screen and (min-width: 769px) {
   #sidebar {
-    transform: translateX(0);
+    left: 0 !important;
   }
 
   #content {
@@ -821,124 +996,8 @@ body {
     left: 260px;
   }
 
-  .overlay {
+  .mobile-menu-btn {
     display: none !important;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  nav {
-    padding: 0 15px;
-  }
-
-  .breadcumb .title {
-    font-size: 15px;
-  }
-
-  .profile-box {
-    gap: 8px;
-  }
-
-  .profile {
-    width: 45px;
-    height: 45px;
-  }
-
-  .logOut-btn {
-    padding: 5px 8px;
-    font-size: 13px;
-  }
-
-  main {
-    padding: 6px 10px 20px 10px;
-  }
-
-  .gauge-card {
-    padding: 20px 15px;
-  }
-
-  .gauge {
-    width: 160px;
-    height: 160px;
-  }
-
-  .gauge-value {
-    font-size: 1.3rem;
-  }
-
-  .pss-card-box {
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 15px;
-  }
-
-  .pss-card-main h3 {
-    font-size: 13px;
-  }
-
-  .pss-card-main p {
-    font-size: 10px;
-  }
-
-  .chart-card {
-    height: 320px;
-  }
-
-  .chart-title {
-    font-size: 12px;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .breadcumb .title {
-    font-size: 14px;
-  }
-
-  .gauge {
-    width: 150px;
-    height: 150px;
-  }
-
-  .gauge-value {
-    font-size: 1.2rem;
-  }
-
-  .pss-card-box {
-    grid-template-columns: 1fr;
-  }
-
-  .title {
-    font-size: 16px;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .brand2 a {
-    font-size: 24px;
-  }
-
-  .brand2 h5 {
-    font-size: 11px;
-  }
-
-  .breadcumb .title {
-    font-size: 13px;
-  }
-
-  .gauge {
-    width: 140px;
-    height: 140px;
-  }
-
-  .gauge-value {
-    font-size: 1.1rem;
-  }
-
-  .pss-card-main h3 {
-    font-size: 12px;
-  }
-
-  .chart-card {
-    height: 300px;
   }
 }
 
@@ -960,5 +1019,3 @@ body {
     height: 450px;
   }
 }
-
-/* Media screen End  */
