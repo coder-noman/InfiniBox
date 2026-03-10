@@ -39,19 +39,19 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
 
     if (email === "admin@hams.com") {
       sessionStorage.setItem("userType", "admin-hams");
-      window.location.href = "/hams1/app/index.html";
+      window.location.href = "./hams/app/index.html";
     }
     else if (email === "rakesh@hams.com") {
       sessionStorage.setItem("userType", "client-hams");
-      window.location.href = "/hams1/app/client.html";
+      window.location.href = "./hams/app/client.html";
     }
     else if (email === "admin@epic.com") {
       sessionStorage.setItem("userType", "admin-epic");
-      window.location.href = "/epic1/app/index.html";
+      window.location.href = "./epic/app/index.html";
     }
     else if (email === "imam@epic.com") {
       sessionStorage.setItem("userType", "client-epic");
-      window.location.href = "/epic1/app/client.html";
+      window.location.href = "./epic/app/client.html";
     }
     else {
       errorBox.innerText = "No role assigned to this user";

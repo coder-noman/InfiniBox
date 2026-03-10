@@ -18,7 +18,7 @@ const page = window.location.pathname;
 //checking auth and role
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "/registration.html";
+    window.location.href = "../../registration.html";
     return;
   }
 
@@ -26,12 +26,12 @@ onAuthStateChanged(auth, (user) => {
 
   if (page.includes("index.html") && role !== "admin-epic") {
     alert("EPIC Admin only");
-    window.location.href = "/registration.html";
+    window.location.href = "../../registration.html";
   }
 
   if (page.includes("client.html") && role !== "client-epic") {
     alert("EPIC Client only");
-    window.location.href = "/registration.html";
+    window.location.href = "../../registration.html";
   }
 });
 
@@ -39,7 +39,7 @@ onAuthStateChanged(auth, (user) => {
 document.getElementById("logout")?.addEventListener("click", async () => {
   await signOut(auth);
   sessionStorage.clear();
-  window.location.href = "/registration.html";
+  window.location.href = "../../registration.html";
 });
 // Authentication End
 
