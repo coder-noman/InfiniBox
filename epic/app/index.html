@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -12,10 +12,15 @@
     <!-- css -->
     <link rel="stylesheet" href="style.css" />
     <title>Link3 Technologies Ltd.</title>
-    <link rel="icon" type="image/png" href="./images/link3.jpg">
+    <link rel="icon" type="image/png" href="./images/link3.jpg" />
   </head>
 
   <body id="main_ho">
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+    
     <!-- Side Bar -->
     <section id="sidebar">
       <div class="brand">
@@ -85,37 +90,6 @@
           <ul id="alert-list" class="alert-list"></ul>
         </div>
       </div>
-      <!-- <div class="device">
-        <a href="#" class="device-btn-upgrade">Customer Service</a>
-        <div class="device-wrapper">
-          <div class="device-wrapper-card">
-            <h5 class="device-label">Contact</h5>
-            <h5 class="device-value">: 01787686086</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">Billing Status</h5>
-            <h5 class="device-value">: Pending</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">License Status</h5>
-            <h5 class="device-value">: Active</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">License Validity</h5>
-            <h5 class="device-value" >: 30/9/2025</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">Link3 Products</h5>
-            <h5 class="device-value"><a href="https://link3.net/">: Buy More..</a></h5>
-          </div>
-
-          <ul id="alert-list" class="alert-list"></ul>
-        </div>
-      </div> -->
     </section>
 
     <!-- Nav -->
@@ -125,14 +99,14 @@
           <h1 class="title">Dashboard: Epic Group</h1>
         </div>
         <div class="profile-box">
-        <h3 class="profile-user"><span>User:</span> Link3 Technologies LTD</h3>
-        <span class="divider"></span>
-        <div class="profile">
-          <img src="images/link3.jpg" alt="" />
+          <h3 class="profile-user"><span>User:</span> Link3 Technologies LTD</h3>
+          <span class="divider"></span>
+          <div class="profile">
+            <img src="images/link3.jpg" alt="" />
+          </div>
+          <span class="divider"></span>
+          <div><button class="logOut-btn" id="logout"><i class="fas fa-sign-out-alt"></i> Log Out</button></div>
         </div>
-        <span class="divider"></span>
-        <div><button class="logOut-btn" id="logout">Log Out</button></div>
-      </div>
       </nav>
 
       <!-- Main -->

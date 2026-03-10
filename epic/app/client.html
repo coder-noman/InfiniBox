@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -12,10 +12,14 @@
     <!-- css -->
     <link rel="stylesheet" href="style.css" />
     <title>Link3 Technologies Ltd.</title>
-  <link rel="icon" type="image/png" href="./images/link3.jpg">
+  <link rel="icon" type="image/png" href="./images/link3.jpg"/>
   </head>
 
   <body>
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
     <!-- Side Bar -->
     <section id="sidebar">
       <div class="brand">
@@ -44,47 +48,6 @@
       </div>
 
       <!-- Device Information -->
-      <!-- <div class="device">
-        <a href="#" class="device-btn-upgrade">Device Information</a>
-        <div class="device-wrapper">
-          <div class="device-wrapper-card">
-            <h5 class="device-label">LAN IP</h5>
-            <h5 class="device-value" id="device-lan">: 192.168.0.128</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">GSM Operator</h5>
-            <h5 class="device-value" id="gsm-operator">: GP</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">GSM Signal</h5>
-            <h5 class="device-value" id="gsm-signal">: 50</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">Internal Battery</h5>
-            <h5 class="device-value" id="internal-battery">: 4.1</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">PSU Status 1</h5>
-            <h5 class="device-value" id="device-psu1">: OK</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">PSU Status 2</h5>
-            <h5 class="device-value" id="device-psu2">: Ok</h5>
-          </div>
-
-          <div class="device-wrapper-card">
-            <h5 class="device-label">Data Path</h5>
-            <h5 class="device-value" id="data-source">: Not Found</h5>
-          </div>
-
-          <ul id="alert-list" class="alert-list"></ul>
-        </div>
-      </div> -->
       <div class="device">
         <a href="#" class="device-btn-upgrade">Customer Service</a>
         <div class="device-wrapper">
@@ -131,7 +94,7 @@
             <img src="images/epicl.png" alt="" />
           </div>
           <span class="divider"></span>
-          <p class="logOut-btn" id="logout">Log Out</p>
+          <div><button class="logOut-btn" id="logout"><i class="fas fa-sign-out-alt"></i> Log Out</button></div>
         </div>
       </nav>
 

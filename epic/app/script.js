@@ -15,6 +15,42 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const page = window.location.pathname;
 
+// Mobile sidebar toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.getElementById('sidebar');
+  
+  if (mobileMenuBtn && sidebar) {
+    mobileMenuBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('sidebar-visible');
+      
+      // Change icon based on sidebar state
+      const icon = mobileMenuBtn.querySelector('i');
+      if (sidebar.classList.contains('sidebar-visible')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile && 
+          sidebar.classList.contains('sidebar-visible') && 
+          !sidebar.contains(event.target) && 
+          !mobileMenuBtn.contains(event.target)) {
+        sidebar.classList.remove('sidebar-visible');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+  }
+});
+
 //checking auth and role
 onAuthStateChanged(auth, (user) => {
   if (!user) {
@@ -41,41 +77,6 @@ document.getElementById("logout")?.addEventListener("click", async () => {
   sessionStorage.clear();
   window.location.href = "../../registration.html";
 });
-// Authentication End
-
-// Authentication start
-// (function () {
-//   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-//   const userType = localStorage.getItem("userType");
-
-//   if (!isAuthenticated || (userType !== "admin-epic" && userType !== "client-epic")) {
-//     window.location.href = "../../registration.html";
-//     return;
-//   }
-
-//   const logoutBtn = document.getElementById("log-out");
-
-//   if (logoutBtn) {
-//     logoutBtn.setAttribute('tabindex', '0');
-//     logoutBtn.setAttribute('role', 'button');
-
-//     function logoutAction(e) {
-//       if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
-//         e.preventDefault();
-
-//         localStorage.removeItem("isAuthenticated");
-//         localStorage.removeItem("userType");
-//         localStorage.removeItem("username");
-
-//         window.location.href = "../../registration.html";
-//       }
-//     }
-
-//     logoutBtn.addEventListener('click', logoutAction);
-//     logoutBtn.addEventListener('keydown', logoutAction);
-//   }
-
-// })();
 // Authentication End
 
 //Declare psu array and variable
@@ -247,20 +248,6 @@ function deviceInformation(lan, gsmOp, gsmSig, ib, psu1, psu2, ds) {
 
   // Gsm Operator
   gsmOperator.innerText = `: ${gsmOp}`;
-
-  // if(gsmOp == 0){
-  //   gsmOperator.innerText = ': Not Found';
-  // }else if(gsmOp == 1){
-  //   gsmOperator.innerText = ': GP';
-  // }else if(gsmOp == 2){
-  //   gsmOperator.innerText = ': Robi';
-  // }else if(gsmOp == 3){
-  //   gsmOperator.innerText = ': Banglalink';
-  // }else if(gsmOp == 4){
-  //   gsmOperator.innerText = ': Airtel';
-  // }else if(gsmOp == 5){
-  //   gsmOperator.innerText = ': Teletalk';
-  // }
 
   // Gsm Signal
   gsmSignal.innerText = `: ${gsmSig} %`;
@@ -485,7 +472,6 @@ function updateAllData(a, b, c, d, e, f, g) {
     gaugeAlert("Humidity", "high");
   }
 }
-// updateAllData();
 // gauge data end
 
 // Chart data start
@@ -532,7 +518,7 @@ function initializeCharts() {
           labels: {
             color: `${color}`,
             font: {
-              size: 14,
+              size: window.innerWidth < 768 ? 10 : 14,
             },
           },
         },
@@ -544,9 +530,9 @@ function initializeCharts() {
           },
           ticks: {
             color: `${color}`,
-            maxTicksLimit: 5,
+            maxTicksLimit: window.innerWidth < 768 ? 4 : 5,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 9 : 12,
             },
           },
         },
@@ -561,7 +547,7 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 9 : 12,
             },
           },
         },
@@ -576,7 +562,7 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 9 : 12,
             },
           },
         },
@@ -587,6 +573,18 @@ function initializeCharts() {
 
 // Initialize charts when the page loads
 window.addEventListener("load", initializeCharts);
+
+// Handle window resize for chart responsiveness
+window.addEventListener('resize', function() {
+  if (lineChart) {
+    // Update chart options based on new window size
+    lineChart.options.plugins.legend.labels.font.size = window.innerWidth < 768 ? 10 : 14;
+    lineChart.options.scales.x.ticks.font.size = window.innerWidth < 768 ? 9 : 12;
+    lineChart.options.scales.y.ticks.font.size = window.innerWidth < 768 ? 9 : 12;
+    lineChart.options.scales.y1.ticks.font.size = window.innerWidth < 768 ? 9 : 12;
+    lineChart.update();
+  }
+});
 
 // update Line chart
 function updateLineChart(x, y) {
@@ -617,26 +615,3 @@ function updateLineChart(x, y) {
   }
 }
 // Chart data end
-
-// Sidebar Dropdown
-// const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
-// const sidebar = document.getElementById('sidebar');
-
-// allDropdown.forEach(item => {
-// 	const a = item.parentElement.querySelector('a:first-child');
-// 	a.addEventListener('click', function (e) {
-// 		e.preventDefault();
-
-// 		if (!this.classList.contains('active')) {
-// 			allDropdown.forEach(i => {
-// 				const aLink = i.parentElement.querySelector('a:first-child');
-
-// 				aLink.classList.remove('active');
-// 				i.classList.remove('show');
-// 			})
-// 		}
-
-// 		this.classList.toggle('active');
-// 		item.classList.toggle('show');
-// 	})
-// })

@@ -37,6 +37,29 @@ a {
   text-decoration: none;
 }
 
+/* Mobile Menu Button - Only visible on mobile */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background: var(--blue);
+  color: var(--light);
+  border: none;
+  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+  background: transparent;
+}
+
 /* Side Bar */
 #sidebar {
   position: fixed;
@@ -84,7 +107,6 @@ a {
 .brand2 a {
   font-size: 30px;
   font-style: italic;
-  /* color: var(--red); */
   color: red;
   font-weight: bolder;
 }
@@ -182,7 +204,6 @@ a {
   background: var(--grey);
   margin-bottom: 5px;
   color: var(--orange);
-  /* font-weight: bold; */
 }
 
 .alert-btn-upgrade {
@@ -193,7 +214,6 @@ a {
   padding: 12px 0;
   color: var(--light);
   background: var(--red);
-  /* background-color: red; */
   transition: all 0.5s ease;
   border-radius: 5px;
   font-weight: 600;
@@ -214,7 +234,6 @@ a {
   box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.3);
   color: var(--light);
   max-width: 400px;
-
 }
 
 .device-wrapper-card {
@@ -237,7 +256,7 @@ a {
 }
 
 /* client Side */
-.device-value a{
+.device-value a {
   color: var(--dark-blue);
 }
 
@@ -349,20 +368,15 @@ nav {
 
 .profile {
   position: relative;
-}
-
-.profile {
   width: 50px;
   height: 50px;
 }
 
 .profile img {
-  width: 110%;
-  /* margin-top: 17px; */
-  /* height: 50px; */
+  width: 100%;
+  height: 100%;
   border-radius: 30%;
-  /* object-fit: cover; */
-  /* cursor: pointer; */
+  object-fit: cover;
 }
 
 /* Main */
@@ -379,7 +393,6 @@ main h1 {
 .gauges-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  /* grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); */
   grid-gap: 20px;
   margin-bottom: 20px;
   margin-top: 15px;
@@ -531,7 +544,6 @@ main h1 {
   color: var(--light);
   margin-bottom: 10px;
   text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .chart-container {
@@ -541,7 +553,7 @@ main h1 {
 
 /* chart end */
 
-.other-alarm-unit{
+.other-alarm-unit {
   flex: 4;
 }
 
@@ -598,6 +610,7 @@ main h1 {
   border-radius: 7px;
   color: #000;
 }
+
 .stand-btn {
   background: var(--blue);
   padding: 2px 5px;
@@ -605,14 +618,34 @@ main h1 {
   color: #000;
 }
 
+/* Beautiful Logout Button */
 .logOut-btn {
-  background: var(--blue);
-  padding: 5px 10px;
-  border-radius: 7px;
-  color: #000;
-  font-weight: bold;
+  background: var(--red);
+  padding: 8px 16px;
+  border-radius: 30px;
   color: var(--light);
+  font-weight: 600;
   cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.logOut-btn i {
+  font-size: 16px;
+}
+
+.logOut-btn:hover {
+  background: linear-gradient(135deg, #2a4fa0, #1a3a80);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(56, 103, 214, 0.4);
+}
+
+.logOut-btn:active {
+  transform: translateY(0);
 }
 
 /* Footer */
@@ -623,4 +656,232 @@ footer {
   text-align: center;
   padding: 15px 0;
   font-size: 14px;
+}
+
+/* ========== MOBILE ONLY STYLES - Preserves laptop/desktop design ========== */
+@media screen and (max-width: 768px) {
+
+  /* Mobile sidebar behavior */
+  #sidebar {
+    left: -260px;
+    box-shadow: none;
+  }
+
+  #sidebar.sidebar-visible {
+    left: 0;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .mobile-menu-btn {
+    display: block;
+    background: transparent;
+  }
+
+  #content {
+    width: 100%;
+    left: 0;
+  }
+
+  footer {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* Mobile gauges - 2 columns */
+  .gauges-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 12px;
+  }
+
+  .gauge-card {
+    min-width: unset;
+    padding: 12px 8px;
+  }
+
+  .gauge {
+    width: 110px;
+    height: 110px;
+  }
+
+  .gauge-title {
+    font-size: 0.75rem;
+    gap: 4px;
+  }
+
+  .gauge-title i {
+    font-size: 0.8rem;
+  }
+
+  .gauge-value {
+    font-size: 0.9rem;
+  }
+
+  .gauge-unit {
+    font-size: 0.55rem;
+  }
+
+  .gauge-minmax {
+    font-size: 0.5rem;
+  }
+
+  .status {
+    font-size: 0.55rem;
+    padding: 3px 6px;
+  }
+
+  /* Mobile chart - full width */
+  .chart-card {
+    flex: 1 1 100%;
+    height: 300px;
+    min-width: unset;
+    padding: 12px;
+  }
+
+  .chart-title {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  /* Mobile alarm cards - 2 per row, 3 rows for 6 cards */
+  .other-alarm-unit {
+    flex: 1 1 100%;
+  }
+
+  .pss-card-box {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 12px;
+  }
+
+  .pss-card {
+    padding: 8px;
+  }
+
+  .pss-card-main h3 {
+    font-size: 13px;
+  }
+
+  .pss-card-main p {
+    font-size: 11px;
+  }
+
+  .on-btn,
+  .off-btn,
+  .show-btn,
+  .stand-btn {
+    padding: 2px 4px;
+    font-size: 10px;
+  }
+
+  /* Mobile navigation adjustments */
+  nav {
+    padding: 0 15px;
+    height: 90px;
+    grid-gap: 3px;
+    flex-direction: column;
+  }
+
+  .breadcumb h1 {
+    font-size: 28px;
+  }
+
+  .profile-box {
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .profile-box h3 {
+    font-size: 13px;
+  }
+
+  .profile-box span {
+    font-size: 14px;
+  }
+
+  .profile {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logOut-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .logOut-btn i {
+    font-size: 14px;
+  }
+
+  /* Mobile last update */
+  .last-update {
+    font-size: 12px;
+    padding: 10px 0;
+    flex-wrap: wrap;
+  }
+
+  /* Mobile device information */
+  .device-label,
+  .device-value {
+    font-size: 11px;
+  }
+
+  .alert-btn-upgrade,
+  .device-btn-upgrade {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+
+  .alert-list-card {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  main {
+    padding: 6px 15px 15px 15px;
+  }
+
+  main h1 {
+    font-size: 18px;
+  }
+}
+
+/* Very small devices */
+@media screen and (max-width: 380px) {
+  .gauges-container {
+    grid-template-columns: 1fr;
+  }
+
+  .gauge {
+    width: 130px;
+    height: 130px;
+  }
+
+  .pss-card-box {
+    grid-template-columns: 1fr;
+  }
+  nav {
+    height: 70px;
+  }
+
+  .breadcumb h1 {
+    font-size: 22px;
+  }
+
+  .profile-box {
+    gap: 5px;
+  }
+
+  .profile-box h3 {
+    font-size: 11px;
+  }
+
+  .profile {
+    width: 35px;
+    height: 35px;
+  }
+
+  .logOut-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
 }
