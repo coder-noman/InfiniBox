@@ -34,31 +34,54 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Authentication end
-
-const menuToggle = document.getElementById('menuToggle');
-const sidebar = document.getElementById('sidebar');
-const content = document.getElementById('content');
-let overlay;
-
-if (menuToggle) {
-  menuToggle.addEventListener('click', function () {
-    sidebar.classList.toggle('active');
-
-    if (!overlay) {
-      overlay = document.createElement('div');
-      overlay.className = 'overlay';
-      content.appendChild(overlay);
-
-      overlay.addEventListener('click', function () {
-        sidebar.classList.remove('active');
-        overlay.classList.remove('active');
-      });
-    }
-
-    overlay.classList.toggle('active');
+// Logout functionality
+const logoutBtn = document.getElementById('logout');
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', () => {
+    signOut(auth).then(() => {
+      sessionStorage.removeItem("userType");
+      window.location.href = "/registration.html";
+    }).catch((error) => {
+      console.error('Logout error:', error);
+    });
   });
 }
+
+// Mobile sidebar toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.getElementById('sidebar');
+  
+  if (mobileMenuBtn && sidebar) {
+    mobileMenuBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('sidebar-visible');
+      
+      // Change icon based on sidebar state
+      const icon = mobileMenuBtn.querySelector('i');
+      if (sidebar.classList.contains('sidebar-visible')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile && 
+          sidebar.classList.contains('sidebar-visible') && 
+          !sidebar.contains(event.target) && 
+          !mobileMenuBtn.contains(event.target)) {
+        sidebar.classList.remove('sidebar-visible');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+  }
+});
 
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -87,7 +110,7 @@ psuDataShow();
 alarmData(alarm_arr, 0);
 
 var socket = new WebSocket("ws://27.147.170.162:81");
-socket.onmessage = function (event) {
+socket.onmessage = function(event) {
   const data = event.data.split(":");
   const data_catagory = data[0] || "";
   const msg = data[1] || "";
@@ -158,6 +181,7 @@ function psuDataInsert(x, y) {
   ipduSum_arr[1] = ipdu2_arr.reduce((x, y) => x + y, 0);
   updateBarChart();
 }
+
 function psuDataShow() {
   const psuId = [
     "r750-ps-1",
@@ -237,6 +261,7 @@ function psuOnShowData(psu_Id, psu_d_id, psu_value) {
   document.getElementById(psu_d_id).innerText = `${psu_value} VA`;
   document.getElementById(psu_d_id).classList.add("show-btn");
 }
+
 function psuOffShowData(psu_Id, psuCardData) {
   document.getElementById(psu_Id).innerText = "OFF";
   document.getElementById(psu_Id).classList.add("off-btn");
@@ -302,7 +327,6 @@ function alarmData(x, input_voltage) {
   }
 }
 
-
 function gaugeAlert(data, status) {
   let ul = document.getElementById("alert-list");
   let li = document.createElement("li");
@@ -321,11 +345,8 @@ function deviceInformation(lan, gsmOp, gsmSig, ib, psu1, psu2, ds) {
   const dataSource = document.getElementById("data-source");
 
   lanIp.innerHTML = `: ${lan}`;
-
   gsmOperator.innerText = `: ${gsmOp}`;
-
   gsmSignal.innerText = `: ${gsmSig} %`;
-
   internalBattery.innerText = `: ${ib} V`;
 
   if (psu1 == 1) {
@@ -353,14 +374,14 @@ function clearAllData() {
   document.getElementById("alert-list").innerHTML = "";
 
   const psuId = [
-    "bgp-psu1",
-    "bgp-psu2",
-    "fortinet-psu1",
-    "fortinet-psu2",
-    "check-point-psu1",
-    "check-point-psu2",
-    "cisco-psu",
-    "lan-psu",
+    "r750-ps-1",
+    "nas-ps-2",
+    "r720-ps-2",
+    "r730-1-ps-1",
+    "r730-2-ps-2",
+    "r730-3-ps-2",
+    "san-sw-1-ps-2",
+    "san-ps-2",
     "cisco-distribution-psu",
     "ho-dr-psu1",
     "ho-dr-psu2",
@@ -368,26 +389,18 @@ function clearAllData() {
     "ho-service-psu2",
     "nvr-psu",
     "r730-1-psu1",
-    "r730-1-psu2",
-    "r730-2-psu1",
-    "r730-2-psu2",
-    "san-sw1-psu1",
-    "san-sw1-psu2",
-    "san-sw-psu1",
-    "san-sw-psu2",
-    "san-sorage-psu1",
-    "san-sorage-psu2",
+    "r730-1-psu2"
   ];
 
   const psuDisplayId = [
-    "bgp-d-psu1",
-    "bgp-d-psu2",
-    "fortinet-d-psu1",
-    "fortinet-d-psu2",
-    "check-point-d-psu1",
-    "check-point-d-psu2",
-    "cisco-d-psu",
-    "lan-d-psu",
+    "r750-d-ps-1",
+    "nas-d-ps-2",
+    "r720-d-ps-2",
+    "r730-1-d-ps-1",
+    "r730-2-d-ps-2",
+    "r730-3-d-ps-2",
+    "san-sw-1-d-ps-2",
+    "san-d-ps-2",
     "cisco-distribution-d-psu",
     "ho-dr-d-psu1",
     "ho-dr-d-psu2",
@@ -396,14 +409,6 @@ function clearAllData() {
     "nvr-d-psu",
     "r730-1-d-psu1",
     "r730-1-d-psu2",
-    "r730-2-d-psu1",
-    "r730-2-d-psu2",
-    "san-sw1-d-psu1",
-    "san-sw1-d-psu2",
-    "san-sw-d-psu1",
-    "san-sw-d-psu2",
-    "san-sorage-d-psu1",
-    "san-sorage-d-psu2",
   ];
 
   for (let j = 0; j < psuId.length; j++) {
@@ -609,7 +614,7 @@ function initializeCharts() {
           labels: {
             color: `${color}`,
             font: {
-              size: 14,
+              size: window.innerWidth < 768 ? 10 : 14,
             },
           },
         },
@@ -621,9 +626,9 @@ function initializeCharts() {
           },
           ticks: {
             color: `${color}`,
-            maxTicksLimit: 5,
+            maxTicksLimit: window.innerWidth < 768 ? 4 : 5,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 8 : 12,
             },
           },
         },
@@ -638,7 +643,7 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 8 : 12,
             },
           },
         },
@@ -653,7 +658,7 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 8 : 12,
             },
           },
         },
@@ -676,7 +681,7 @@ function initializeCharts() {
             "#3867d6",
           ],
           borderRadius: 10,
-          barThickness: 70,
+          barThickness: 120,
         },
       ],
     },
@@ -691,7 +696,6 @@ function initializeCharts() {
           anchor: "end",
           align: "top",
           offset: 0,
-          minWidth: 90,
           backgroundColor: "#0f1c2d",
           borderRadius: 6,
           padding: {
@@ -702,17 +706,17 @@ function initializeCharts() {
           },
           color: "#ffffff",
           font: {
-            size: 13,
+            size: window.innerWidth < 768 ? 10 : 13,
             weight: "700",
           },
-          formatter: function (value, ctx) {
+          formatter: function(value) {
             const percent = Math.round((value * 100) / 2500);
             return percent + "%";
           },
         },
         tooltip: {
           callbacks: {
-            label: function (context) {
+            label: function(context) {
               return context.parsed.y + " VA";
             },
           },
@@ -727,10 +731,10 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 8 : 12,
             },
-            callback: function (value) {
-              return value + " VA";
+            callback: function(value) {
+              return value ;
             },
           },
         },
@@ -741,7 +745,7 @@ function initializeCharts() {
           ticks: {
             color: `${color}`,
             font: {
-              size: 12,
+              size: window.innerWidth < 768 ? 10 : 12,
             },
           },
         },
@@ -752,6 +756,24 @@ function initializeCharts() {
 }
 
 window.addEventListener("load", initializeCharts);
+
+// Update chart fonts on resize
+window.addEventListener('resize', function() {
+  if (lineChart) {
+    lineChart.options.plugins.legend.labels.font.size = window.innerWidth < 768 ? 10 : 14;
+    lineChart.options.scales.x.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
+    lineChart.options.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
+    lineChart.options.scales.y1.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
+    lineChart.update();
+  }
+  
+  if (barChart) {
+    barChart.options.plugins.datalabels.font.size = window.innerWidth < 768 ? 10 : 13;
+    barChart.options.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
+    barChart.options.scales.x.ticks.font.size = window.innerWidth < 768 ? 10 : 12;
+    barChart.update();
+  }
+});
 
 function updateLineChart(x, y) {
   let z = new Date().toLocaleTimeString();

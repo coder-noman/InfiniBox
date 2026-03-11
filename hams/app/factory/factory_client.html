@@ -13,6 +13,10 @@
 </head>
 
 <body id="factory_client">
+  <button class="mobile-menu-btn" id="mobileMenuBtn">
+    <i class="fas fa-bars"></i>
+  </button>
+
   <section id="sidebar">
     <div class="brand">
       <img class="brand-img" src="../images/link3.jpg" alt="" />
@@ -68,9 +72,6 @@
 
   <section id="content">
     <nav>
-      <div class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-      </div>
       <div class="breadcumb">
         <h1 class="title">Dashboard: Hams Factory</h1>
       </div>
@@ -80,8 +81,8 @@
         <div class="profile">
           <img src="../images/hamslogo.jpg" alt="" />
         </div>
-        <!-- <span class="divider"></span>
-          <p class="logOut-btn" id="log-out">Log Out</p> -->
+        <span class="divider"></span>
+        <div><button class="logOut-btn" id="logout"><i class="fas fa-sign-out-alt"></i> Log Out</button></div>
       </div>
     </nav>
 
@@ -220,7 +221,7 @@
           </div>
         </div>
         <div class="chart-card">
-          <div class="chart-title">Ipdu1 and Ipdu2 Load</div>
+          <div class="chart-title">Ipdu1 and Ipdu2 Load ( VA )</div>
           <div class="chart-container">
             <canvas id="voltage-chart"></canvas>
           </div>
@@ -431,7 +432,7 @@
     </main>
   </section>
   <footer>
-    <p>&copy; 2025 Link3 Technologies LTD. All rights reserved.</p>
+    <p>&copy; 2026 Link3 Technologies LTD. All rights reserved.</p>
   </footer>
   <script type="module" src="factory.js"></script>
 </body>

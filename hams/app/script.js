@@ -15,6 +15,33 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const page = window.location.pathname;
 
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "../../registration.html";
+    return;
+  }
+
+  const role = sessionStorage.getItem("userType");
+
+  if (page.includes("index.html") && role !== "admin-hams") {
+    alert("Admin only");
+    window.location.href = "../../registration.html";
+  }
+
+  if (page.includes("client.html") && role !== "client-hams") {
+    alert("Client only");
+    window.location.href = "../../registration.html";
+  }
+});
+
+// logout start
+document.getElementById("logout")?.addEventListener("click", async () => {
+  await signOut(auth);
+  sessionStorage.clear();
+  window.location.href = "../../registration.html";
+});
+// Authentication end
+
 // Mobile sidebar toggle functionality
 document.addEventListener('DOMContentLoaded', function() {
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -50,33 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
-
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "../../registration.html";
-    return;
-  }
-
-  const role = sessionStorage.getItem("userType");
-
-  if (page.includes("index.html") && role !== "admin-hams") {
-    alert("Admin only");
-    window.location.href = "../../registration.html";
-  }
-
-  if (page.includes("client.html") && role !== "client-hams") {
-    alert("Client only");
-    window.location.href = "../../registration.html";
-  }
-});
-
-// logout start
-document.getElementById("logout")?.addEventListener("click", async () => {
-  await signOut(auth);
-  sessionStorage.clear();
-  window.location.href = "../../registration.html";
-});
-// Authentication end
 
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -850,7 +850,6 @@ function updateLineChart(x, y) {
 }
 
 function updateBarChart() {
-  console.log("ipduSum_arr update= ", ipduSum_arr);
   if (barChart) {
     barChart.data.datasets[0].data = ipduSum_arr;
     barChart.update("none");

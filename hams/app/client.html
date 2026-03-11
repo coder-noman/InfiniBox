@@ -13,6 +13,10 @@
 </head>
 
 <body>
+  <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
   <section id="sidebar">
     <div class="brand">
       <img class="brand-img" src="./images/link3.jpg" alt="" />
@@ -70,9 +74,6 @@
 
   <section id="content">
     <nav>
-      <div class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-      </div>
       <div class="breadcumb">
         <h1 class="title">Dashboard: Hams HQ</h1>
       </div>
@@ -83,7 +84,7 @@
           <img src="images/hamslogo.jpg" alt="" />
         </div>
         <span class="divider"></span>
-        <p class="logOut-btn" id="logout" tabindex="0">Log Out</p>
+        <div><button class="logOut-btn" id="logout"><i class="fas fa-sign-out-alt"></i> Log Out</button></div>
       </div>
     </nav>
 
@@ -222,7 +223,7 @@
           </div>
         </div>
         <div class="chart-card">
-          <div class="chart-title">Ipdu1, Ipdu2 and Ipdu3 Load</div>
+          <div class="chart-title">Ipdu1, Ipdu2 and Ipdu3 Load ( VA )</div>
           <div class="chart-container">
             <canvas id="voltage-chart"></canvas>
           </div>
