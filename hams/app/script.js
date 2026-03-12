@@ -42,43 +42,6 @@ document.getElementById("logout")?.addEventListener("click", async () => {
 });
 // Authentication end
 
-//sidebar toggle start
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const sidebar = document.getElementById('sidebar');
-  
-  if (mobileMenuBtn && sidebar) {
-    mobileMenuBtn.addEventListener('click', function() {
-      sidebar.classList.toggle('sidebar-visible');
-      
-      //icon change based on sidebar state
-      const icon = mobileMenuBtn.querySelector('i');
-      if (sidebar.classList.contains('sidebar-visible')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-times');
-      } else {
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-      }
-    });
-    
-    // close sidebar when outside click start
-    document.addEventListener('click', function(event) {
-      const isMobile = window.innerWidth <= 768;
-      if (isMobile && 
-          sidebar.classList.contains('sidebar-visible') && 
-          !sidebar.contains(event.target) && 
-          !mobileMenuBtn.contains(event.target)) {
-        sidebar.classList.remove('sidebar-visible');
-        const icon = mobileMenuBtn.querySelector('i');
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-      }
-    });
-  }
-});
-//sidebar toggle end
-
 //  declare all data array start
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -156,8 +119,19 @@ socket.onmessage = function (event) {
     alarm_arr[j] = parseInt(splited_data[i]);
   }
   alarmData(alarm_arr, splited_data[1]);
+  updateDateTime();
 };
 //websocket End
+
+// sync time start
+function updateDateTime() {
+  let z = new Date().toLocaleTimeString();
+  let date = new Date().toLocaleDateString("en-GB");
+
+  document.getElementById("lastUpdateTime").textContent = z;
+  document.getElementById("lastUpdateDate").textContent = date;
+}
+// sync time end
 
 // psu data insert start 
 function psuDataInsert(x, y, z) {
@@ -853,10 +827,6 @@ window.addEventListener('resize', function() {
 // update line chart start 
 function updateLineChart(x, y) {
   let z = new Date().toLocaleTimeString();
-  let date = new Date().toLocaleDateString("en-GB");
-
-  document.getElementById("lastUpdateTime").textContent = z;
-  document.getElementById("lastUpdateDate").textContent = date;
 
   for (let i = 0; i < 7; i++) {
     temp[i] = temp[i + 1];
@@ -885,3 +855,40 @@ function updateBarChart() {
   }
 }
 // update line chart end
+
+//sidebar toggle start
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.getElementById('sidebar');
+  
+  if (mobileMenuBtn && sidebar) {
+    mobileMenuBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('sidebar-visible');
+      
+      //icon change based on sidebar state
+      const icon = mobileMenuBtn.querySelector('i');
+      if (sidebar.classList.contains('sidebar-visible')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // close sidebar when outside click start
+    document.addEventListener('click', function(event) {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile && 
+          sidebar.classList.contains('sidebar-visible') && 
+          !sidebar.contains(event.target) && 
+          !mobileMenuBtn.contains(event.target)) {
+        sidebar.classList.remove('sidebar-visible');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+  }
+});
+//sidebar toggle end

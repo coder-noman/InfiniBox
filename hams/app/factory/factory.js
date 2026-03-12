@@ -42,43 +42,6 @@ document.getElementById("logout")?.addEventListener("click", async () => {
 });
 // Authentication end
 
-//sidebar toggle start
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const sidebar = document.getElementById('sidebar');
-  
-  if (mobileMenuBtn && sidebar) {
-    mobileMenuBtn.addEventListener('click', function() {
-      sidebar.classList.toggle('sidebar-visible');
-      
-      //icon change based on sidebar state
-      const icon = mobileMenuBtn.querySelector('i');
-      if (sidebar.classList.contains('sidebar-visible')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-times');
-      } else {
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-      }
-    });
-    
-    // close sidebar when outside click start
-    document.addEventListener('click', function(event) {
-      const isMobile = window.innerWidth <= 768;
-      if (isMobile && 
-          sidebar.classList.contains('sidebar-visible') && 
-          !sidebar.contains(event.target) && 
-          !mobileMenuBtn.contains(event.target)) {
-        sidebar.classList.remove('sidebar-visible');
-        const icon = mobileMenuBtn.querySelector('i');
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-      }
-    });
-  }
-});
-//sidebar toggle end
-
 //  declare all data array start
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -87,7 +50,7 @@ let alarm_arr = [0, 0, 0, 0, 0];
 
 let temp = [0, 0, 0, 0, 0, 0, 0, 0];
 let hum = [0, 0, 0, 0, 0, 0, 0, 0];
-const tim = ["00:00", "00:00", "00:00", "00:00", "00:00","00:00", "00:00", "00:00"];
+const tim = ["00:00", "00:00", "00:00", "00:00", "00:00", "00:00", "00:00", "00:00"];
 let barChart;
 let lineChart;
 
@@ -154,11 +117,24 @@ socket.onmessage = function (event) {
     alarm_arr[j] = parseInt(splited_data[i]);
   }
   alarmData(alarm_arr, splited_data[1]);
+  updateDateTime();
 };
 //websocket End
 
+// sync time start
+function updateDateTime() {
+  let z = new Date().toLocaleTimeString();
+  let date = new Date().toLocaleDateString("en-GB");
+
+  document.getElementById("lastUpdateTime").textContent = z;
+  document.getElementById("lastUpdateDate").textContent = date;
+}
+// sync time end
+
 // psu data insert start 
 function psuDataInsert(x, y) {
+  console.log(x);
+  console.log(y);
   if (x != "") {
     var ipdu1_data = x.split(",");
     for (let i = 2, k = 0; i <= 9; i++, k++) {
@@ -677,9 +653,9 @@ function initializeCharts() {
       },
     },
   });
-//line chart declare end
+  //line chart declare end
 
-//bar chart declare start
+  //bar chart declare start
   const voltageCtx = document.getElementById("voltage-chart").getContext("2d");
   barChart = new Chart(voltageCtx, {
     type: "bar",
@@ -774,7 +750,7 @@ window.addEventListener("load", initializeCharts);
 //bar chart declare end
 
 //chart fonts and resize update start
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
   if (lineChart) {
     lineChart.options.plugins.legend.labels.font.size = window.innerWidth < 768 ? 10 : 14;
     lineChart.options.scales.x.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
@@ -782,7 +758,7 @@ window.addEventListener('resize', function() {
     lineChart.options.scales.y1.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
     lineChart.update();
   }
-  
+
   if (barChart) {
     barChart.options.plugins.datalabels.font.size = window.innerWidth < 768 ? 10 : 13;
     barChart.options.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
@@ -795,10 +771,6 @@ window.addEventListener('resize', function() {
 // update line chart start 
 function updateLineChart(x, y) {
   let z = new Date().toLocaleTimeString();
-  let date = new Date().toLocaleDateString("en-GB");
-
-  document.getElementById("lastUpdateTime").textContent = z;
-  document.getElementById("lastUpdateDate").textContent = date;
 
   for (let i = 0; i < 7; i++) {
     temp[i] = temp[i + 1];
@@ -827,3 +799,40 @@ function updateBarChart() {
   }
 }
 // update line chart end
+
+//sidebar toggle start
+document.addEventListener('DOMContentLoaded', function () {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.getElementById('sidebar');
+
+  if (mobileMenuBtn && sidebar) {
+    mobileMenuBtn.addEventListener('click', function () {
+      sidebar.classList.toggle('sidebar-visible');
+
+      //icon change based on sidebar state
+      const icon = mobileMenuBtn.querySelector('i');
+      if (sidebar.classList.contains('sidebar-visible')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+
+    // close sidebar when outside click start
+    document.addEventListener('click', function (event) {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile &&
+        sidebar.classList.contains('sidebar-visible') &&
+        !sidebar.contains(event.target) &&
+        !mobileMenuBtn.contains(event.target)) {
+        sidebar.classList.remove('sidebar-visible');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+  }
+});
+//sidebar toggle end
