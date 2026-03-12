@@ -1,3 +1,4 @@
+//Authentication Start
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -13,19 +14,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Eye icon toggle functionality
+// eye icon toggle start
 const togglePassword = document.getElementById('togglePassword');
 const password = document.getElementById('password');
 
 togglePassword.addEventListener('click', function() {
-  // Toggle the type attribute
   const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
   password.setAttribute('type', type);
-  
-  // Toggle the eye icon
   this.classList.toggle('fa-eye-slash');
   this.classList.toggle('fa-eye');
 });
+// eye icon toggle end
 
 document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -62,3 +61,4 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     document.getElementById("password").value = "";
   }
 });
+//Authentication End

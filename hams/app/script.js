@@ -766,24 +766,25 @@ function initializeCharts() {
           display: false,
         },
         datalabels: {
-          anchor: "end",
-          align: "top",
+          anchor: "center",
+          align: "center",
           offset: 0,
-          backgroundColor: "#0f1c2d",
-          borderRadius: 6,
-          padding: {
-            top: 6,
-            bottom: 6,
-            left: 9,
-            right: 9,
-          },
-          color: "#ffffff",
+          backgroundColor: "transparent",
+          // backgroundColor: "#0f1c2d",
+          // borderRadius: 6,
+          // padding: {
+          //   top: 6,
+          //   bottom: 6,
+          //   left: 9,
+          //   right: 9,
+          // },
+          color: "black",
           font: {
-            size: window.innerWidth < 768 ? 10 : 13,
+            size: window.innerWidth < 768 ? 10 : 20,
             weight: "700",
           },
           formatter: function (value) {
-            const percent = Math.round((value * 100) / 2500);
+            const percent = Math.round((value * 100) / 3000);
             return percent + "%";
           },
         },
@@ -852,7 +853,7 @@ window.addEventListener('resize', function() {
 // update line chart start 
 function updateLineChart(x, y) {
   let z = new Date().toLocaleTimeString();
-  let date = new Date().toLocaleDateString();
+  let date = new Date().toLocaleDateString("en-GB");
 
   document.getElementById("lastUpdateTime").textContent = z;
   document.getElementById("lastUpdateDate").textContent = date;

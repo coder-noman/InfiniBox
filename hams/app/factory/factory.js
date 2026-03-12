@@ -42,7 +42,7 @@ document.getElementById("logout")?.addEventListener("click", async () => {
 });
 // Authentication end
 
-// Mobile sidebar toggle functionality
+//sidebar toggle start
 document.addEventListener('DOMContentLoaded', function() {
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const sidebar = document.getElementById('sidebar');
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileMenuBtn.addEventListener('click', function() {
       sidebar.classList.toggle('sidebar-visible');
       
-      // Change icon based on sidebar state
+      //icon change based on sidebar state
       const icon = mobileMenuBtn.querySelector('i');
       if (sidebar.classList.contains('sidebar-visible')) {
         icon.classList.remove('fa-bars');
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // Close sidebar when clicking outside on mobile
+    // close sidebar when outside click start
     document.addEventListener('click', function(event) {
       const isMobile = window.innerWidth <= 768;
       if (isMobile && 
@@ -77,7 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+//sidebar toggle end
 
+//  declare all data array start
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipduSum_arr = [0, 0];
@@ -94,7 +96,9 @@ updateLineChart(0, 0);
 updateBarChart();
 psuDataShow();
 alarmData(alarm_arr, 0);
+//  declare all data array end
 
+//websocket start
 var socket = new WebSocket("ws://27.147.170.162:81");
 socket.onmessage = function (event) {
   const data = event.data.split(":");
@@ -151,7 +155,9 @@ socket.onmessage = function (event) {
   }
   alarmData(alarm_arr, splited_data[1]);
 };
+//websocket End
 
+// psu data insert start 
 function psuDataInsert(x, y) {
   if (x != "") {
     var ipdu1_data = x.split(",");
@@ -172,7 +178,9 @@ function psuDataInsert(x, y) {
   ipduSum_arr[1] = ipdu2_arr.reduce((x, y) => x + y, 0);
   updateBarChart();
 }
+// psu data insert end
 
+// psu data show start 
 function psuDataShow() {
   const psuId = [
     "r750-ps-1",
@@ -229,6 +237,8 @@ function psuDataShow() {
     "R730-1 PSU1",
     "R730-1 PSU2",
   ];
+
+  // ipdu 1
   for (let i = 0, j = 0; i <= 7; i++, j++) {
     if (ipdu1_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu1_arr[i]);
@@ -236,7 +246,7 @@ function psuDataShow() {
       psuOffShowData(psuId[j], psuCardData[j]);
     }
   }
-
+  // ipdu 2
   for (let i = 0, j = 8; i <= 7; i++, j++) {
     if (ipdu2_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu2_arr[i]);
@@ -245,7 +255,7 @@ function psuDataShow() {
     }
   }
 }
-
+// psu on card
 function psuOnShowData(psu_Id, psu_d_id, psu_value) {
   document.getElementById(psu_Id).innerText = "ON";
   document.getElementById(psu_Id).classList.add("on-btn");
@@ -253,6 +263,7 @@ function psuOnShowData(psu_Id, psu_d_id, psu_value) {
   document.getElementById(psu_d_id).classList.add("show-btn");
 }
 
+// psu off card
 function psuOffShowData(psu_Id, psuCardData) {
   document.getElementById(psu_Id).innerText = "OFF";
   document.getElementById(psu_Id).classList.add("off-btn");
@@ -262,7 +273,9 @@ function psuOffShowData(psu_Id, psuCardData) {
   li.textContent = `${psuCardData} Failed.`;
   ul.appendChild(li);
 }
+// psu data show end
 
+// alarm data show start
 function alarmData(x, input_voltage) {
   const alarmId = [
     "water-leakage", "fire-Alarm", "generator-status",
@@ -281,6 +294,7 @@ function alarmData(x, input_voltage) {
   ];
 
   for (let i = 0; i <= 4; i++) {
+    // generator alarm only
     if (i == 2) {
       if (x[i] == 0) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
@@ -300,7 +314,7 @@ function alarmData(x, input_voltage) {
           ul.appendChild(li);
         }
       }
-    }
+    } //others 4 Alarm 
     else {
       if (x[i] == 1) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
@@ -317,15 +331,9 @@ function alarmData(x, input_voltage) {
     }
   }
 }
+// alarm data show end
 
-function gaugeAlert(data, status) {
-  let ul = document.getElementById("alert-list");
-  let li = document.createElement("li");
-  li.classList.add("alert-list-card");
-  li.textContent = `${data} is ${status}.`;
-  ul.appendChild(li);
-}
-
+//device inforemation start
 function deviceInformation(lan, gsmOp, gsmSig, ib, psu1, psu2, ds) {
   const lanIp = document.getElementById("device-lan");
   const gsmOperator = document.getElementById("gsm-operator");
@@ -360,7 +368,9 @@ function deviceInformation(lan, gsmOp, gsmSig, ib, psu1, psu2, ds) {
     dataSource.innerText = `: GPRS`;
   }
 }
+// device inforemation end
 
+//clear all data start
 function clearAllData() {
   document.getElementById("alert-list").innerHTML = "";
 
@@ -431,6 +441,18 @@ function clearAllData() {
     }
   }
 }
+//clear all data end
+
+// gauge data start
+// gauge alert function start
+function gaugeAlert(data, status) {
+  let ul = document.getElementById("alert-list");
+  let li = document.createElement("li");
+  li.classList.add("alert-list-card");
+  li.textContent = `${data} is ${status}.`;
+  ul.appendChild(li);
+}
+// gauge alert function end
 
 function getColor(value, ranges) {
   if (value >= ranges.green[0] && value <= ranges.green[1]) {
@@ -477,7 +499,7 @@ function updateGauge(elementId, value, ranges) {
     statusElement.classList.remove("pulse");
   }
 }
-
+// gauge data update function 
 function updateAllData(a, b, c, d, e, f) {
   const inputVoltage = parseFloat(a) || 0;
   updateGauge("input-voltage", inputVoltage, {
@@ -563,9 +585,10 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("Humidity", "high");
   }
 }
+// gauge data end
 
+//line chart declare start
 let color = "white";
-
 function initializeCharts() {
   const environmentCtx = document.getElementById("environment-chart").getContext("2d");
   lineChart = new Chart(environmentCtx, {
@@ -654,7 +677,9 @@ function initializeCharts() {
       },
     },
   });
+//line chart declare end
 
+//bar chart declare start
   const voltageCtx = document.getElementById("voltage-chart").getContext("2d");
   barChart = new Chart(voltageCtx, {
     type: "bar",
@@ -682,24 +707,25 @@ function initializeCharts() {
           display: false,
         },
         datalabels: {
-          anchor: "end",
-          align: "top",
+          anchor: "center",
+          align: "center",
           offset: 0,
-          backgroundColor: "#0f1c2d",
-          borderRadius: 6,
-          padding: {
-            top: 6,
-            bottom: 6,
-            left: 9,
-            right: 9,
-          },
-          color: "#ffffff",
+          backgroundColor: "transparent",
+          // backgroundColor: "#0f1c2d",
+          // borderRadius: 6,
+          // padding: {
+          //   top: 6,
+          //   bottom: 6,
+          //   left: 9,
+          //   right: 9,
+          // },
+          color: "black",
           font: {
-            size: window.innerWidth < 768 ? 10 : 13,
+            size: window.innerWidth < 768 ? 10 : 20,
             weight: "700",
           },
           formatter: function (value) {
-            const percent = Math.round((value * 100) / 2500);
+            const percent = Math.round((value * 100) / 3000);
             return percent + "%";
           },
         },
@@ -745,8 +771,9 @@ function initializeCharts() {
 }
 
 window.addEventListener("load", initializeCharts);
+//bar chart declare end
 
-// Update chart fonts on resize
+//chart fonts and resize update start
 window.addEventListener('resize', function() {
   if (lineChart) {
     lineChart.options.plugins.legend.labels.font.size = window.innerWidth < 768 ? 10 : 14;
@@ -763,10 +790,12 @@ window.addEventListener('resize', function() {
     barChart.update();
   }
 });
+//chart fonts and resize update end
 
+// update line chart start 
 function updateLineChart(x, y) {
   let z = new Date().toLocaleTimeString();
-  let date = new Date().toLocaleDateString();
+  let date = new Date().toLocaleDateString("en-GB");
 
   document.getElementById("lastUpdateTime").textContent = z;
   document.getElementById("lastUpdateDate").textContent = date;
@@ -788,10 +817,13 @@ function updateLineChart(x, y) {
     lineChart.update("none");
   }
 }
+// update line chart end
 
+// update bar chart start
 function updateBarChart() {
   if (barChart) {
     barChart.data.datasets[0].data = ipduSum_arr;
     barChart.update("none");
   }
 }
+// update line chart end
