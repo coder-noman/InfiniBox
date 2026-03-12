@@ -14,9 +14,6 @@
   --dark-grey: #8d8d8d;
   --light: #fff;
   --dark: #000;
-  --light-green: #e3ffcb;
-  --light-blue: #d0e4ff;
-  --dark-blue: #0c5fcd;
   --yellow: #fe9b13;
   --green: #4ecdc4;
   --blue: #3867d6;
@@ -250,10 +247,6 @@ a {
   font-size: 12px;
   font-weight: normal;
   flex: 1;
-}
-
-.device-value a {
-  color: var(--dark-blue);
 }
 
 .device-btn-upgrade {
@@ -570,6 +563,10 @@ main h1 {
 .pdu3 {
   border: 3px solid #3867d675;
   background-color: #3867d61f;
+}
+.pdu4 {
+  border: 3px solid #f5e61781;
+  background-color: rgba(203, 214, 56, 0.432);
 }
 
 .psu-display {

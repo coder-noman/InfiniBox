@@ -17,35 +17,30 @@ const page = window.location.pathname;
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "/registration.html";
+    window.location.href = "../../../registration.html";
     return;
   }
 
   const role = sessionStorage.getItem("userType");
 
-  if (page.includes("factory.html") && role !== "admin-hams") {
+  if (page.includes("index.html") && role !== "admin-hams") {
     alert("Admin only");
-    window.location.href = "/registration.html";
+    window.location.href = "../../../registration.html";
   }
 
-  if (page.includes("factory_client.html") && role !== "client-hams") {
+  if (page.includes("client.html") && role !== "client-hams") {
     alert("Client only");
-    window.location.href = "/registration.html";
+    window.location.href = "../../../registration.html";
   }
 });
 
-// Logout functionality
-const logoutBtn = document.getElementById('logout');
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    signOut(auth).then(() => {
-      sessionStorage.removeItem("userType");
-      window.location.href = "/registration.html";
-    }).catch((error) => {
-      console.error('Logout error:', error);
-    });
-  });
-}
+// logout start
+document.getElementById("logout")?.addEventListener("click", async () => {
+  await signOut(auth);
+  sessionStorage.clear();
+  window.location.href = "../../../registration.html";
+});
+// Authentication end
 
 // Mobile sidebar toggle functionality
 document.addEventListener('DOMContentLoaded', function() {
@@ -90,16 +85,7 @@ let alarm_arr = [0, 0, 0, 0, 0];
 
 let temp = [0, 0, 0, 0, 0, 0, 0, 0];
 let hum = [0, 0, 0, 0, 0, 0, 0, 0];
-const tim = [
-  "11:00",
-  "11:05",
-  "11:10",
-  "11:15",
-  "11:20",
-  "11:25",
-  "11:30",
-  "11:35",
-];
+const tim = ["00:00", "00:00", "00:00", "00:00", "00:00","00:00", "00:00", "00:00"];
 let barChart;
 let lineChart;
 
@@ -110,22 +96,27 @@ psuDataShow();
 alarmData(alarm_arr, 0);
 
 var socket = new WebSocket("ws://27.147.170.162:81");
-socket.onmessage = function(event) {
+socket.onmessage = function (event) {
   const data = event.data.split(":");
   const data_catagory = data[0] || "";
   const msg = data[1] || "";
 
-  if (data_catagory !== "Hams_FAC1") {
+  if (data_catagory == "Hams_FAC1") {
+  } else {
     return;
   }
-
   // clear ipdu start
   ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
   ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
-  ipduSum_arr = [0, 0, 0];
+  ipduSum_arr = [0, 0];
   // clear ipdu end
 
   clearAllData();
+
+  // console.log(data[1]);
+  // console.log(data[2]);
+  // console.log(data[3]);
+  // console.log(data[4]);
 
   var splited_data = data[3].split(",");
 
@@ -475,7 +466,7 @@ function updateGauge(elementId, value, ranges) {
   fillElement.style.color = color;
 
   const unit = valueElement.querySelector(".gauge-unit")?.textContent || "";
-  valueElement.innerHTML = `${value} <span class="gauge-unit">${unit}</span>`;
+  valueElement.innerHTML = `${Math.round(value * 10) / 10} <span class="gauge-unit">${unit}</span>`;
 
   statusElement.textContent = status.text;
   statusElement.className = `status ${status.class}`;
@@ -488,7 +479,7 @@ function updateGauge(elementId, value, ranges) {
 }
 
 function updateAllData(a, b, c, d, e, f) {
-  const inputVoltage = a;
+  const inputVoltage = parseFloat(a) || 0;
   updateGauge("input-voltage", inputVoltage, {
     green: [191, 245],
     orange: [0, 190],
@@ -502,7 +493,7 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("Input Voltage", "high");
   }
 
-  const ups1Voltage = b;
+  const ups1Voltage = parseFloat(b) || 0;
   updateGauge("ups1-voltage", ups1Voltage, {
     green: [211, 230],
     orange: [0, 210],
@@ -516,7 +507,7 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("UPS1 Voltage", "high");
   }
 
-  const ups2Voltage = c;
+  const ups2Voltage = parseFloat(c) || 0;
   updateGauge("ups2-voltage", ups2Voltage, {
     green: [211, 230],
     orange: [0, 210],
@@ -530,7 +521,7 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("UPS2 Voltage", "high");
   }
 
-  const batteryVoltage = d;
+  const batteryVoltage = parseFloat(d) || 0;
   updateGauge("battery-voltage", batteryVoltage, {
     green: [241, 280],
     orange: [221, 240],
@@ -544,29 +535,29 @@ function updateAllData(a, b, c, d, e, f) {
     gaugeAlert("Battery Voltage", "very Low");
   }
 
-  const temperature = e;
+  const temperature = parseFloat(e) || 0;
   updateGauge("temperature", temperature, {
-    green: [0, 25],
-    orange: [26, 31],
+    green: [0, 25.9],
+    orange: [26, 31.9],
     red: [32, 55],
     max: 55,
   });
 
-  if (temperature >= 26 && temperature <= 31) {
+  if (temperature >= 26 && temperature <= 31.9) {
     gaugeAlert("Temperature", "high");
   } else if (temperature >= 32 && temperature <= 55) {
     gaugeAlert("Temperature", "very high");
   }
 
-  const humidity = f;
+  const humidity = parseFloat(f) || 0;
   updateGauge("humidity", humidity, {
-    green: [41, 80],
+    green: [41, 80.9],
     orange: [81, 100],
-    red: [0, 40],
+    red: [0, 40.9],
     max: 100,
   });
 
-  if (humidity >= 0 && humidity <= 40) {
+  if (humidity >= 0 && humidity <= 40.9) {
     gaugeAlert("Humidity", "low");
   } else if (humidity >= 81 && humidity <= 100) {
     gaugeAlert("Humidity", "high");
@@ -576,9 +567,7 @@ function updateAllData(a, b, c, d, e, f) {
 let color = "white";
 
 function initializeCharts() {
-  const environmentCtx = document
-    .getElementById("environment-chart")
-    .getContext("2d");
+  const environmentCtx = document.getElementById("environment-chart").getContext("2d");
   lineChart = new Chart(environmentCtx, {
     type: "line",
     data: {
@@ -676,8 +665,8 @@ function initializeCharts() {
           label: "Load (VA)",
           data: ipduSum_arr,
           backgroundColor: [
-            "#61dbd3ff",
             "#fc5c65",
+            "#fe9b13",
             "#3867d6",
           ],
           borderRadius: 10,
@@ -709,14 +698,14 @@ function initializeCharts() {
             size: window.innerWidth < 768 ? 10 : 13,
             weight: "700",
           },
-          formatter: function(value) {
+          formatter: function (value) {
             const percent = Math.round((value * 100) / 2500);
             return percent + "%";
           },
         },
         tooltip: {
           callbacks: {
-            label: function(context) {
+            label: function (context) {
               return context.parsed.y + " VA";
             },
           },
@@ -733,8 +722,8 @@ function initializeCharts() {
             font: {
               size: window.innerWidth < 768 ? 8 : 12,
             },
-            callback: function(value) {
-              return value ;
+            callback: function (value) {
+              return value;
             },
           },
         },
@@ -788,8 +777,8 @@ function updateLineChart(x, y) {
     tim[i] = tim[i + 1];
   }
 
-  temp[7] = x;
-  hum[7] = y;
+  temp[7] = parseFloat(x) || 0;
+  hum[7] = parseFloat(y) || 0;
   tim[7] = z;
 
   if (lineChart) {
