@@ -1,3 +1,4 @@
+import { TARGET_IP } from "../../config.js";
 // Authentication start
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -51,7 +52,7 @@ let alarm_arr = [0, 0, 0, 0, 0];
 
 let temp = [0, 0, 0, 0, 0, 0, 0, 0];
 let hum = [0, 0, 0, 0, 0, 0, 0, 0];
-const tim = ["00:00", "00:00", "00:00", "00:00", "00:00","00:00", "00:00", "00:00"];
+const tim = ["00:00", "00:00", "00:00", "00:00", "00:00", "00:00", "00:00", "00:00"];
 let barChart;
 let lineChart;
 
@@ -63,7 +64,7 @@ alarmData(alarm_arr, 0);
 //  declare all data array end
 
 //websocket start
-var socket = new WebSocket("ws://27.147.170.162:81");
+var socket = new WebSocket(`${TARGET_IP}`);
 socket.onmessage = function (event) {
   const data = event.data.split(":");
   const data_catagory = data[0] || "";
@@ -711,9 +712,9 @@ function initializeCharts() {
       },
     },
   });
-//line chart declare end
+  //line chart declare end
 
-//bar chart declare start
+  //bar chart declare start
   const voltageCtx = document.getElementById("voltage-chart").getContext("2d");
   barChart = new Chart(voltageCtx, {
     type: "bar",
@@ -806,7 +807,7 @@ window.addEventListener("load", initializeCharts);
 //bar chart declare end
 
 //chart fonts and resize update start
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
   if (lineChart) {
     lineChart.options.plugins.legend.labels.font.size = window.innerWidth < 768 ? 10 : 14;
     lineChart.options.scales.x.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
@@ -814,7 +815,7 @@ window.addEventListener('resize', function() {
     lineChart.options.scales.y1.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
     lineChart.update();
   }
-  
+
   if (barChart) {
     barChart.options.plugins.datalabels.font.size = window.innerWidth < 768 ? 10 : 13;
     barChart.options.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 12;
@@ -857,14 +858,14 @@ function updateBarChart() {
 // update line chart end
 
 //sidebar toggle start
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const sidebar = document.getElementById('sidebar');
-  
+
   if (mobileMenuBtn && sidebar) {
-    mobileMenuBtn.addEventListener('click', function() {
+    mobileMenuBtn.addEventListener('click', function () {
       sidebar.classList.toggle('sidebar-visible');
-      
+
       //icon change based on sidebar state
       const icon = mobileMenuBtn.querySelector('i');
       if (sidebar.classList.contains('sidebar-visible')) {
@@ -875,14 +876,14 @@ document.addEventListener('DOMContentLoaded', function() {
         icon.classList.add('fa-bars');
       }
     });
-    
+
     // close sidebar when outside click start
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
       const isMobile = window.innerWidth <= 768;
-      if (isMobile && 
-          sidebar.classList.contains('sidebar-visible') && 
-          !sidebar.contains(event.target) && 
-          !mobileMenuBtn.contains(event.target)) {
+      if (isMobile &&
+        sidebar.classList.contains('sidebar-visible') &&
+        !sidebar.contains(event.target) &&
+        !mobileMenuBtn.contains(event.target)) {
         sidebar.classList.remove('sidebar-visible');
         const icon = mobileMenuBtn.querySelector('i');
         icon.classList.remove('fa-times');

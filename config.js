@@ -1,0 +1,1 @@
+export const TARGET_IP = "ws://27.147.170.162:81";

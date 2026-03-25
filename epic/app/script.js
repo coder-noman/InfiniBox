@@ -1,3 +1,4 @@
+import { TARGET_IP } from "../../config.js";
 // Authentication start
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -102,7 +103,7 @@ updateAlarmData(0, 0, 0, 0, 0);
 // Default Data Show end
 
 //.........websocket_client code Start..............
-var socket = new WebSocket("ws://27.147.170.162:81");
+var socket = new WebSocket(`${TARGET_IP}`);
 socket.onmessage = function (event) {
   const data = event.data.split(":");
   const data_catagory = data[0] || "";
