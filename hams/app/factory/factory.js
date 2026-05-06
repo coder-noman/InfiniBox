@@ -522,15 +522,15 @@ function updateAllData(a, b, c, d, e, f) {
 
   const batteryVoltage = parseFloat(d) || 0;
   updateGauge("battery-voltage", batteryVoltage, {
-    green: [192.1, 280],
-    orange: [80, 192],
-    red: [0, 79],
+    green: [192, 280],
+    orange: [180, 191],
+    red: [0, 179],
     max: 280,
   });
 
-  if (batteryVoltage >= 80 && batteryVoltage <= 192) {
+  if (batteryVoltage >= 180 && batteryVoltage <= 191) {
     gaugeAlert("Battery Voltage", "low");
-  } else if (batteryVoltage >= 0 && batteryVoltage <= 79) {
+  } else if (batteryVoltage >= 0 && batteryVoltage <= 179) {
     gaugeAlert("Battery Voltage", "very Low");
   }
 
