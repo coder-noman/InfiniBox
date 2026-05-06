@@ -522,15 +522,15 @@ function updateAllData(a, b, c, d, e, f) {
 
   const batteryVoltage = parseFloat(d) || 0;
   updateGauge("battery-voltage", batteryVoltage, {
-    green: [241, 280],
-    orange: [221, 240],
-    red: [0, 220],
+    green: [192.1, 280],
+    orange: [80, 192],
+    red: [0, 79],
     max: 280,
   });
 
-  if (batteryVoltage >= 221 && batteryVoltage <= 240) {
+  if (batteryVoltage >= 80 && batteryVoltage <= 192) {
     gaugeAlert("Battery Voltage", "low");
-  } else if (batteryVoltage >= 0 && batteryVoltage <= 220) {
+  } else if (batteryVoltage >= 0 && batteryVoltage <= 79) {
     gaugeAlert("Battery Voltage", "very Low");
   }
 
@@ -701,8 +701,8 @@ function initializeCharts() {
             size: window.innerWidth < 768 ? 10 : 20,
             weight: "700",
           },
-          formatter: function (value) {
-            const percent = Math.round((value * 100) / 3000);
+          formatter: function (ipduSum) {
+            const percent = Math.round(((ipduSum * 0.7)* 100 )/ 3000);
             return percent + "%";
           },
         },
